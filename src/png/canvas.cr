@@ -35,7 +35,7 @@ module PNG
     def write(io : IO)
       io.write(HEADER)
       HeaderChunk.new(@width, @height, @options).write(io)
-      DataChunk.new.write(io, @data, @options.bytes_per_pixel * @width)
+      DataChunk.new.write(io, @data, @options.bytes_per_pixel.to_u32 * @width)
       EndChunk.new.write(io)
     end
 
