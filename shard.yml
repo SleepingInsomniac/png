@@ -1,0 +1,9 @@
+name: PNG
+version: 0.1.0
+
+authors:
+  - Alex Clink <alexclink@gmail.com>
+
+crystal: 1.9.2
+
+license: MIT
