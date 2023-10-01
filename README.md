@@ -8,7 +8,7 @@ A simple PNG implementation in Crystal
 
    ```yaml
    dependencies:
-     png:
+     PNG:
        github: sleepinginsomniac/png
    ```
 
@@ -19,12 +19,10 @@ A simple PNG implementation in Crystal
 ```crystal
 require "png"
 
-png = PNG.new(1, 1)
-png[0, 0] = Bytes[0xFF, 0x00, 0x00]
-png.write("1x1.png")
+PNG.write("1x1.png", 1, 1, Bytes[0xFF, 0, 0]) # writes a 1x1 single red pixel png
 ```
 
-## Development
+## TODO
 
 ### Filter Types
 
