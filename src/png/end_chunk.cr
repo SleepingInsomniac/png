@@ -1,4 +1,4 @@
-class PNG
+module PNG
   struct EndChunk
     # There is no data in an end chunk
     # - 4 bytes for size (0)

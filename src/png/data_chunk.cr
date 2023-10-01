@@ -1,6 +1,6 @@
 require "compress/zlib"
 
-class PNG
+module PNG
   struct DataChunk < Chunk
     @filter : FilterMethod
 

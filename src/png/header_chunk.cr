@@ -1,4 +1,4 @@
-class PNG
+module PNG
   struct HeaderChunk < Chunk
     @width : UInt32
     @height : UInt32

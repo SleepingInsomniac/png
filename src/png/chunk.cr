@@ -1,7 +1,7 @@
 require "digest/crc32"
 require "digest/io_digest"
 
-class PNG
+module PNG
   abstract struct Chunk
     property chunk_type : String
 
