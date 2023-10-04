@@ -15,8 +15,13 @@ module PNG
     Up      = 2
     Average = 3
     Paeth   = 4
+
+    # This isn't an actual value in the PNG spec, but used to signify that the smallest resulting
+    # filter should be used
+    Adaptive
   end
 
+  # In practice, the only compression method is deflate
   enum Compression : UInt8
     Deflate = 0
   end
@@ -39,7 +44,7 @@ module PNG
   def self.write(io : IO, width : UInt32, height : UInt32, data : Bytes, options : Options = Options.new)
     io.write(HEADER)
     HeaderChunk.new(width, height, options).write(io)
-    DataChunk.new.write(io, data, options.bytes_per_pixel.to_u32 * width)
+    DataChunk.new(data, width, options.bytes_per_pixel).write(io)
     EndChunk.new.write(io)
   end
 

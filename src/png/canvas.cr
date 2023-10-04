@@ -3,7 +3,7 @@ module PNG
     getter width : UInt32
     getter height : UInt32
     @data : Bytes
-    @options : Options
+    getter options : Options
 
     def initialize(width : Int, height : Int, @options = Options.new)
       @width = width.to_u32
@@ -33,10 +33,7 @@ module PNG
     end
 
     def write(io : IO)
-      io.write(HEADER)
-      HeaderChunk.new(@width, @height, @options).write(io)
-      DataChunk.new.write(io, @data, @options.bytes_per_pixel.to_u32 * @width)
-      EndChunk.new.write(io)
+      PNG.write(io, @width, @height, bytes, @options)
     end
 
     def write(path : String)

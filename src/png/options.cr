@@ -4,7 +4,7 @@ module PNG
     property color_type : ColorType
     property compression_method : Compression # deflate is the only supported method
     property interlacing : Interlacing
-    getter bytes_per_pixel : UInt8
+    getter bytes_per_pixel : Int32
 
     def initialize(
       @bit_depth = 8u8,
@@ -13,15 +13,15 @@ module PNG
       @interlacing = Interlacing::None
     )
       bytes = case @color_type
-              when ColorType::Grayscale      then 1u8
-              when ColorType::TrueColor      then 3u8
-              when ColorType::Indexed        then 1u8
-              when ColorType::GrayscaleAlpha then 2u8
-              when ColorType::TrueColorAlpha then 4u8
+              when ColorType::Grayscale      then 1
+              when ColorType::TrueColor      then 3
+              when ColorType::Indexed        then 1
+              when ColorType::GrayscaleAlpha then 2
+              when ColorType::TrueColorAlpha then 4
               else
                 raise "Invalid color type #{@color_type}"
               end
-      @bytes_per_pixel = (bytes * @bit_depth) // 8u8
+      @bytes_per_pixel = (bytes * @bit_depth) // 8
     end
   end
 end
