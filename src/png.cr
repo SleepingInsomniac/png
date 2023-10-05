@@ -53,4 +53,36 @@ module PNG
       self.write(io, width, height, data, options)
     end
   end
+
+  def self.read(io : IO)
+    png_header = Bytes.new(8)
+    io.read_fully(png_header)
+    raise "PNG header mismatch" unless png_header == HEADER
+
+    header_chunk = HeaderChunk.read(io)
+    data = IO::Memory.new
+
+    loop do
+      chunk_type = Chunk.read(io) do |crc_io, byte_size, chunk_type|
+        buffer = Bytes.new(byte_size)
+        crc_io.read_fully(buffer)
+        data.write(buffer) if chunk_type == "IDAT"
+        chunk_type
+      end
+
+      break if chunk_type == EndChunk::TYPE
+    end
+
+    data_chunk = Compress::Zlib::Reader.open(data.rewind) do |inflate|
+      DataChunk.unfilter(inflate, header_chunk.width, header_chunk.height, header_chunk.options.bytes_per_pixel)
+    end
+
+    {header: header_chunk, data: data_chunk}
+  end
+
+  def self.read(path : String)
+    File.open(path, "rb") do |io|
+      self.read(io)
+    end
+  end
 end

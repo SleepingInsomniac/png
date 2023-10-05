@@ -2,8 +2,30 @@ require "digest/crc32"
 require "digest/io_digest"
 
 module PNG
-  abstract struct Chunk
+  class Chunk
     property chunk_type : String
+
+    def self.read(io : IO)
+      byte_size = io.read_bytes(UInt32, IO::ByteFormat::BigEndian)
+      crc32 = Digest::CRC32.new
+      crc_io = IO::Digest.new(io, Digest::CRC32.new, IO::Digest::DigestMode::Read)
+      buffer = Bytes.new(4)
+      crc_io.read_fully(buffer)
+      chunk_type = String.new(buffer)
+
+      chunk = yield crc_io, byte_size, chunk_type
+
+      # Check the crc32
+      crc32_received = Bytes.new(4)
+      io.read_fully(crc32_received)
+      crc32_calculated = crc_io.final
+
+      unless crc32_received == crc32_calculated
+        raise "Crc32 mismatch - received: #{crc32_received}, actual: #{crc32_calculated}"
+      end
+
+      chunk
+    end
 
     def initialize(@chunk_type)
     end

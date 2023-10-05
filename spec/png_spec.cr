@@ -19,4 +19,19 @@ describe PNG do
       output.rewind.to_slice.should eq(fixture("2x2_rgba.png"))
     end
   end
+
+  describe "#read" do
+    it "reads a minimal 1x1 red pixel PNG image" do
+      io = IO::Memory.new(fixture("1x1_rgb.png"))
+      png = PNG.read(io)
+      png[:data].data.should eq(Bytes[0xFF, 0, 0])
+    end
+
+    it "checks the png header" do
+      io = IO::Memory.new(Bytes[1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+      expect_raises(Exception) do
+        PNG.read(io)
+      end
+    end
+  end
 end

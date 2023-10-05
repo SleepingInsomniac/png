@@ -1,7 +1,8 @@
 module PNG
-  struct PaletteChunk < Chunk
+  class PaletteChunk < Chunk
+    @chunk_type = "PLTE"
+
     def initialize
-      @chunk_type = "PLTE"
     end
   end
 end

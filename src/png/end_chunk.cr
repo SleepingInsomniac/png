@@ -1,5 +1,7 @@
 module PNG
-  struct EndChunk
+  class EndChunk
+    TYPE = "IEND"
+
     # There is no data in an end chunk
     # - 4 bytes for size (0)
     # - IEND
