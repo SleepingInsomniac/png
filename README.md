@@ -22,15 +22,35 @@ require "png"
 PNG.write("1x1.png", 1, 1, Bytes[0xFF, 0, 0]) # writes a 1x1 single red pixel png
 ```
 
-## TODO
+```crystal
+require "png"
+
+png = PNG.read("1x1.png")
+
+png[:header]    # => PNG::HeaderChunk
+png[:data]      # => PNG::DataChunk
+png[:data].data # => Bytes(w * h * bpp)
+```
+
+===
 
 ### Filter Types
 
+#### Reading
+
 - [x] None
-- [ ] Sub
-- [ ] Up
-- [ ] Average
-- [ ] Paeth
+- [x] Sub
+- [x] Up
+- [x] Average
+- [x] Paeth
+
+#### Writing
+
+- [x] None
+- [x] Sub
+- [x] Up
+- [x] Average
+- [x] Paeth
 
 ### Interlacing
 
