@@ -27,7 +27,7 @@ module PNG
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    # Remove the sub filter (in place)
+    # Remove the sub filter
     #
     def unsub!
       (@bytes_per_pixel...@data.size).each do |x|

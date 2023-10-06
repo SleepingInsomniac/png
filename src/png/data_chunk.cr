@@ -17,9 +17,11 @@ module PNG
     # Go through each scanline of data and remove the filtering depending on the filter
     # used to encode that specific line.
     #
-    def self.unfilter(filtered : IO, width : Int, height : Int, bytes_per_pixel : Int)
-      bytes_per_row = width * bytes_per_pixel
-      data = Bytes.new((width * bytes_per_pixel) * height)
+    def self.unfilter(filtered : IO, width : Int, height : Int, bits_per_pixel : Int)
+      bytes_per_row = ((width * bits_per_pixel) / 8).ceil.to_i32
+      bytes_per_pixel = (bits_per_pixel // 8).clamp(1..)
+
+      data = Bytes.new(bytes_per_row * height)
       previous_row : Bytes? = nil
 
       height.times do |row_index|
@@ -28,14 +30,14 @@ module PNG
         filtered.read_fully(row)
 
         case filter
-        when FilterMethod::None # Nothing to do. Yay!
+        when FilterMethod::None
         when FilterMethod::Sub
           Scanline.new(row, bytes_per_pixel).unsub!
         when FilterMethod::Up
           Scanline.new(row, bytes_per_pixel).unup!(previous_row)
         when FilterMethod::Average
           Scanline.new(row, bytes_per_pixel).unaverage!(previous_row)
-        when FilterMethod::Paeth # TODO
+        when FilterMethod::Paeth
           Scanline.new(row, bytes_per_pixel).unpaeth!(previous_row)
         else
           raise "Unsupported filter method: #{filter}"
@@ -49,7 +51,7 @@ module PNG
 
     getter data : Bytes
     @width : UInt32
-    getter bytes_per_pixel : Int32
+    getter bits_per_pixel : Int32
     @filter : FilterMethod = FilterMethod::None
     @compression_method = Compression::Deflate
     @deflate_speed = Compress::Deflate::BEST_SPEED
@@ -57,7 +59,7 @@ module PNG
     def initialize(
       @data,
       @width,
-      @bytes_per_pixel,
+      @bits_per_pixel,
       @filter = FilterMethod::None,
       @compression_method = Compression::Deflate,
       @deflate_speed = Compress::Deflate::BEST_SPEED
@@ -65,7 +67,11 @@ module PNG
     end
 
     def bytes_per_row
-      @width * @bytes_per_pixel
+      ((@width * @bits_per_pixel) / 8).ceil.to_i32
+    end
+
+    def bytes_per_pixel
+      (@bits_per_pixel // 8).clamp(1..)
     end
 
     def row_range(row_index)
@@ -88,14 +94,14 @@ module PNG
               when FilterMethod::None
                 deflate.write(row)
               when FilterMethod::Sub
-                Scanline.new(row, @bytes_per_pixel).sub(deflate)
+                Scanline.new(row, bytes_per_pixel).sub(deflate)
               when FilterMethod::Up
-                Scanline.new(row, @bytes_per_pixel).up(previous_row, deflate)
+                Scanline.new(row, bytes_per_pixel).up(previous_row, deflate)
               when FilterMethod::Average
-                Scanline.new(row, @bytes_per_pixel).average(previous_row, deflate)
+                Scanline.new(row, bytes_per_pixel).average(previous_row, deflate)
               when FilterMethod::Paeth
-                Scanline.new(row, @bytes_per_pixel).paeth(previous_row, deflate)
-                # when FilterMethod::Adaptive
+                Scanline.new(row, bytes_per_pixel).paeth(previous_row, deflate)
+                # when FilterMethod::Adaptive # TODO Choose the best
               else
                 raise "Unsupported filter method: #{@filter}"
               end

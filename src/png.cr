@@ -7,6 +7,19 @@ module PNG
     Indexed        = 3
     GrayscaleAlpha = 4
     TrueColorAlpha = 6
+
+    # Number of values required for the color type
+    def channels
+      case self
+      when Grayscale      then 1
+      when TrueColor      then 3
+      when Indexed        then 1
+      when GrayscaleAlpha then 2
+      when TrueColorAlpha then 4
+      else
+        raise "Invalid color type #{self}"
+      end
+    end
   end
 
   enum FilterMethod : UInt8
@@ -39,12 +52,13 @@ end
 require "./png/options"
 require "./png/chunk"
 require "./png/canvas"
+require "./png/packed_io"
 
 module PNG
   def self.write(io : IO, width : UInt32, height : UInt32, data : Bytes, options : Options = Options.new)
     io.write(HEADER)
     HeaderChunk.new(width, height, options).write(io)
-    DataChunk.new(data, width, options.bytes_per_pixel).write(io)
+    DataChunk.new(data, width, options.bits_per_pixel).write(io)
     EndChunk.new.write(io)
   end
 
@@ -74,7 +88,7 @@ module PNG
     end
 
     data_chunk = Compress::Zlib::Reader.open(data.rewind) do |inflate|
-      DataChunk.unfilter(inflate, header_chunk.width, header_chunk.height, header_chunk.options.bytes_per_pixel)
+      DataChunk.unfilter(inflate, header_chunk.width, header_chunk.height, header_chunk.options.bits_per_pixel)
     end
 
     {header: header_chunk, data: data_chunk}
