@@ -32,30 +32,41 @@ png[:data]      # => PNG::DataChunk
 png[:data].data # => Bytes(w * h * bpp)
 ```
 
-===
+___
 
-### Filter Types
+#### Filters
 
-#### Reading
+| Filter  | read/write |
+|---------|------------|
+| None    | r/w        |
+| Up      | r/w        |
+| Average | r/w        |
+| Paeth   | r/w        |
 
-- [x] None
-- [x] Sub
-- [x] Up
-- [x] Average
-- [x] Paeth
+#### ColorTypes
 
-#### Writing
+All PNG color types are supported for reading / writing
 
-- [x] None
-- [x] Sub
-- [x] Up
-- [x] Average
-- [x] Paeth
+| ColorType      | 1bit | 2bit | 4bit | 8bit | 16bit |
+|----------------|------|------|------|------|-------|
+| Grayscale      | r/w  | r/w  | r/w  | r/w  | r/w   |
+| TrueColor      |      |      |      | r/w  | r/w   |
+| Indexed        | -/-  | -/-  | -/-  | -/-  |       |
+| GrayscaleAlpha |      |      |      | r/w  | r/w   |
+| TrueColorAlpha |      |      |      | r/w  | r/w   |
 
-### Interlacing
+#### Interlacing
 
-- [x] None
-- [ ] Adam7
+| Name  |     |
+|-------|-----|
+| None  | r/w |
+| Adam7 | -/- |
+
+
+#### Not yet implemented
+- Interpreting data at different bit depths. The data will be present as either Bytes or packed into Bytes
+- Using per-row filters when encoding.
+- Palette images
 
 ## Contributing
 
