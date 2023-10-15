@@ -63,7 +63,7 @@ module PNG
     def unup!(other : Bytes)
       other.try do |other|
         (0...@data.size).each do |i|
-          @data[i] = @data[i] &+ other[i]
+          @data[i] = @data[i] &+ (other[i]? || 0u8)
         end
       end
     end
