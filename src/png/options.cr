@@ -13,16 +13,16 @@ module PNG
     )
     end
 
-    def bits_per_pixel
-      @color_type.channels * @bit_depth
+    def bits_per_pixel : UInt32
+      @color_type.channels.to_u32 * @bit_depth.to_u32
     end
 
-    def bytes_per_pixel
-      (bits_per_pixel // 8).clamp(1..)
+    def bytes_per_pixel : UInt8
+      (@bit_depth // 8).clamp(1u8..)
     end
 
     def bytes_per_row(width : Int)
-      ((bits_per_pixel * width) / 8).ceil.to_i32
+      ((bits_per_pixel * width) / 8).ceil.to_u32
     end
   end
 end

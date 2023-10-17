@@ -3,7 +3,7 @@ module PNG
   #
   struct Scanline
     property data : Bytes
-    @bytes_per_pixel : Int32
+    @bytes_per_pixel : UInt32
 
     def initialize(@data, @bytes_per_pixel)
     end

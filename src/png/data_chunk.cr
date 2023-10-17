@@ -29,7 +29,7 @@ module PNG
     #
     def self.parse(filtered : IO, width : Int, height : Int, options : Options)
       bits_per_pixel = options.bits_per_pixel
-      bytes_per_pixel = (bits_per_pixel // 8).clamp(1..)
+      bytes_per_pixel = (bits_per_pixel // 8u32).clamp(1u32..)
       # output_bytes = ((width * bits_per_pixel) / 8).ceil.to_i32 * height
 
       data = Bytes.new((width * bytes_per_pixel) * height)
@@ -99,36 +99,52 @@ module PNG
     end
 
     def write(io : IO, filter = FilterMethod::None)
+      bytes_per_pixel = @options.bytes_per_pixel
+      bits_per_pixel = @options.bits_per_pixel
+
+      debug "\n\nEncoding: #{@width}x#{@height} - bytes per pixel: #{bytes_per_pixel}"
+
       super(io) do |idat|
         case @options.compression_method
         when Compression::Deflate
           Compress::Zlib::Writer.open(idat, @deflate_speed) do |deflate|
             previous_row : Bytes? = nil
+            start_index = 0
 
-            bytes_per_pixel = @options.bytes_per_pixel
+            passes = options.interlacing.adam7? ? A7_PASSES : [{start_x: 0, start_y: 0, each_x: 1, each_y: 1}]
 
-            # Get each row as a sub-slice
-            (@data.size // @options.bytes_per_row(@width)).times do |row_index|
-              deflate.write_byte(filter.value) # Every row of the image needs a filter byte
-              row = @data[row_range(row_index)]
+            passes.each_with_index do |pass, i|
+              debug "\nPass ##{i}: #{pass}"
+              row_pixels = ((@width - pass[:start_x]) / pass[:each_x]).ceil.to_i32
+              pass_rows = ((@height - pass[:start_y]) + (pass[:each_y] - 1)) // pass[:each_y]
+              debug "#{row_pixels}x#{pass_rows}"
+              debug "--------------"
 
-              case filter
-              when FilterMethod::None
-                deflate.write(row)
-              when FilterMethod::Sub
-                Scanline.new(row, bytes_per_pixel).sub(deflate)
-              when FilterMethod::Up
-                Scanline.new(row, bytes_per_pixel).up(previous_row, deflate)
-              when FilterMethod::Average
-                Scanline.new(row, bytes_per_pixel).average(previous_row, deflate)
-              when FilterMethod::Paeth
-                Scanline.new(row, bytes_per_pixel).paeth(previous_row, deflate)
-                # when FilterMethod::Adaptive # TODO Choose the best
-              else
-                raise "Unsupported filter method: #{filter}"
+              pass_rows.times do |row_index|
+                row_width_bytes = @options.bytes_per_row(row_pixels)
+                deflate.write_byte(filter.value) # Every row of the image needs a filter byte
+
+                end_index = start_index + row_width_bytes
+                row = @data[start_index...end_index]
+
+                debug "#{row_index.to_s.rjust(2)}: #{filter.to_s.rjust(8)}  #{row.map { |r| r.to_s(16).rjust(2, '0') }.join(' ')}"
+
+                scanline = Scanline.new(row, bytes_per_pixel)
+
+                case filter
+                when FilterMethod::None    then deflate.write(row)
+                when FilterMethod::Sub     then scanline.sub(deflate)
+                when FilterMethod::Up      then scanline.up(previous_row, deflate)
+                when FilterMethod::Average then scanline.average(previous_row, deflate)
+                when FilterMethod::Paeth   then scanline.paeth(previous_row, deflate)
+                  # when FilterMethod::Adaptive # TODO Choose the best
+                else
+                  raise "Unsupported filter method: #{filter}"
+                end
+
+                previous_row = row
+                start_index = end_index
               end
-
-              previous_row = row
             end
           end
         else

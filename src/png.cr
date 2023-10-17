@@ -17,11 +17,11 @@ module PNG
     # Number of values required for the color type
     def channels
       case self
-      when Grayscale      then 1
-      when TrueColor      then 3
-      when Indexed        then 1
-      when GrayscaleAlpha then 2
-      when TrueColorAlpha then 4
+      when Grayscale      then 1_u8
+      when TrueColor      then 3_u8
+      when Indexed        then 1_u8
+      when GrayscaleAlpha then 2_u8
+      when TrueColorAlpha then 4_u8
       else
         raise "Invalid color type #{self}"
       end
