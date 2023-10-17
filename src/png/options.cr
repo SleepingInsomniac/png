@@ -20,5 +20,9 @@ module PNG
     def bytes_per_pixel
       (bits_per_pixel // 8).clamp(1..)
     end
+
+    def bytes_per_row(width : Int)
+      ((bits_per_pixel * width) / 8).ceil.to_i32
+    end
   end
 end

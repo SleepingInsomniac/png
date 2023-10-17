@@ -55,8 +55,8 @@ module PNG
           filter = FilterMethod.new(filtered.read_bytes(UInt8))
 
           end_index = start_index + row_width_bytes
-          row = data[start_index...end_index]
 
+          row = data[start_index...end_index]
           filtered.read_fully(row)
 
           debug "#{row_index.to_s.rjust(2)}: #{filter.to_s.rjust(8)}  #{row.map { |r| r.to_s(16).rjust(2, '0') }.join(' ')}"
@@ -76,45 +76,39 @@ module PNG
         end
       end
 
-      new(data, width, bytes_per_pixel)
+      new(data, width, height, options)
     end
 
     getter data : Bytes
     @width : UInt32
-    getter bits_per_pixel : Int32
-    @compression_method = Compression::Deflate
+    @height : UInt32
+    property options : Options
     @deflate_speed = Compress::Deflate::BEST_SPEED
 
     def initialize(
       @data,
       @width,
-      @bits_per_pixel,
-      @compression_method = Compression::Deflate,
+      @height,
+      @options,
       @deflate_speed = Compress::Deflate::BEST_SPEED
     )
     end
 
-    def bytes_per_row
-      ((@width * @bits_per_pixel) / 8).ceil.to_i32
-    end
-
-    def bytes_per_pixel
-      (@bits_per_pixel // 8).clamp(1..)
-    end
-
     def row_range(row_index)
-      self.class.row_range(row_index, bytes_per_row)
+      self.class.row_range(row_index, @options.bytes_per_row(@width))
     end
 
     def write(io : IO, filter = FilterMethod::None)
       super(io) do |idat|
-        case @compression_method
+        case @options.compression_method
         when Compression::Deflate
           Compress::Zlib::Writer.open(idat, @deflate_speed) do |deflate|
             previous_row : Bytes? = nil
 
+            bytes_per_pixel = @options.bytes_per_pixel
+
             # Get each row as a sub-slice
-            (@data.size // bytes_per_row).times do |row_index|
+            (@data.size // @options.bytes_per_row(@width)).times do |row_index|
               deflate.write_byte(filter.value) # Every row of the image needs a filter byte
               row = @data[row_range(row_index)]
 
@@ -138,7 +132,7 @@ module PNG
             end
           end
         else
-          raise "Unsupported compression method: #{@compression_method}"
+          raise "Unsupported compression method: #{@options.compression_method}"
         end
       end
     end
