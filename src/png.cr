@@ -1,3 +1,9 @@
+macro debug(args)
+  {% if flag?(:debug) %}
+    puts({{args}})
+  {% end %}
+end
+
 module PNG
   # This is technically a bitmask: Alpha, Color, Palette
   # But it's easier to reprsent like this
@@ -74,10 +80,14 @@ module PNG
     raise "PNG header mismatch" unless png_header == HEADER
 
     header_chunk = HeaderChunk.read(io)
+
+    debug "#{header_chunk.width}x#{header_chunk.height}"
+    debug header_chunk.options
     data = IO::Memory.new
 
     loop do
       chunk_type = Chunk.read(io) do |crc_io, byte_size, chunk_type|
+        debug "Chunk: #{chunk_type} (#{byte_size})"
         buffer = Bytes.new(byte_size)
         crc_io.read_fully(buffer)
         data.write(buffer) if chunk_type == "IDAT"
@@ -88,7 +98,12 @@ module PNG
     end
 
     data_chunk = Compress::Zlib::Reader.open(data.rewind) do |inflate|
-      DataChunk.unfilter(inflate, header_chunk.width, header_chunk.height, header_chunk.options.bits_per_pixel)
+      DataChunk.parse(
+        inflate,
+        header_chunk.width,
+        header_chunk.height,
+        header_chunk.options
+      )
     end
 
     {header: header_chunk, data: data_chunk}
