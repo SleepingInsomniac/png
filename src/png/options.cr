@@ -18,7 +18,7 @@ module PNG
     end
 
     def bytes_per_pixel : UInt8
-      (@bit_depth // 8).clamp(1u8..)
+      (bits_per_pixel / 8).ceil.to_u8
     end
 
     def bytes_per_row(width : Int)
