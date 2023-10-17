@@ -60,7 +60,7 @@ module PNG
       value = (@buffer & @mask) >> shift
       @counter += 1
       @mask = @mask.rotate_right(@bit_depth)
-      value
+      @scaling ? scale(value) : value
     end
   end
 end

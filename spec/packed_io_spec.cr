@@ -42,6 +42,16 @@ describe PNG::PackedIO do
 
       data.should eq(Bytes[1, 0, 1, 0, 1, 0, 1, 0])
     end
+
+    it "scales values" do
+      io = IO::Memory.new(Bytes[0b1010_1010])
+      packed_io = PNG::PackedIO.new(io, 1, true)
+
+      data = Bytes.new(8)
+      packed_io.read_fully(data)
+
+      data.should eq(Bytes[255, 0, 255, 0, 255, 0, 255, 0])
+    end
   end
 
   describe "#write" do
