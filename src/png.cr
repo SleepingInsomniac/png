@@ -1,117 +1,117 @@
-macro debug(args)
-  {% if flag?(:debug) %}
-    puts({{args}})
-  {% end %}
-end
+require "compress/zlib"
 
-module PNG
-  # This is technically a bitmask: Alpha, Color, Palette
-  # But it's easier to reprsent like this
-  enum ColorType : UInt8
-    Grayscale      = 0
-    TrueColor      = 2
-    Indexed        = 3
-    GrayscaleAlpha = 4
-    TrueColorAlpha = 6
-
-    # Number of values required for the color type
-    def channels
-      case self
-      when Grayscale      then 1_u8
-      when TrueColor      then 3_u8
-      when Indexed        then 1_u8
-      when GrayscaleAlpha then 2_u8
-      when TrueColorAlpha then 4_u8
-      else
-        raise "Invalid color type #{self}"
-      end
-    end
-  end
-
-  enum FilterMethod : UInt8
-    None    = 0
-    Sub     = 1
-    Up      = 2
-    Average = 3
-    Paeth   = 4
-
-    # This isn't an actual value in the PNG spec, but used to signify that the smallest resulting
-    # filter should be used
-    Adaptive
-  end
-
-  # In practice, the only compression method is deflate
-  enum Compression : UInt8
-    Deflate = 0
-  end
-
-  enum Interlacing : UInt8
-    None  = 0
-    Adam7 = 1
-  end
-
-  # Instead of using an intermediate string, this is just the bytes
-  # "\x89PNG\r\n\x1a\n"
-  HEADER = Bytes[137, 80, 78, 71, 13, 10, 26, 10]
-end
-
-require "./png/options"
+require "./png/error"
 require "./png/chunk"
-require "./png/canvas"
-require "./png/packed_io"
+require "./png/header"
+require "./png/parsers/parse_IHDR"
+require "./png/parsers/parse_PLTE"
+require "./png/parsers/parse_IDAT"
 
 module PNG
-  def self.write(io : IO, width : UInt32, height : UInt32, data : Bytes, options : Options = Options.new)
-    io.write(HEADER)
-    HeaderChunk.new(width, height, options).write(io)
-    DataChunk.new(data, width, height, options).write(io)
-    EndChunk.new.write(io)
+  # Only logs messages if built with `-Dpng-PNG.debug`
+  macro debug(args)
+    {% if flag?(:"png-debug") %}
+      if typeof({{args}}) == String
+        puts({{args}})
+      else
+        pp({{args}})
+      end
+    {% end %}
   end
 
-  def self.write(path : String, width : UInt32, height : UInt32, data : Bytes, options : Options = Options.new)
-    File.open(path, "wb") do |io|
-      self.write(io, width, height, data, options)
-    end
+  VERSION = {{`shards version`.stringify.chomp}}
+
+  # "\x89PNG\r\n\x1a\n"
+  MAGIC = Bytes[137, 80, 78, 71, 13, 10, 26, 10]
+
+  def self.read(path : String)
+    PNG.debug "Reading path: #{path}"
+    File.open(path, "rb") { |io| self.read(io) }
   end
 
   def self.read(io : IO)
-    png_header = Bytes.new(8)
-    io.read_fully(png_header)
-    raise "PNG header mismatch" unless png_header == HEADER
+    finished = false
 
-    header_chunk = HeaderChunk.read(io)
+    header : Header? = nil
+    palette : Slice(UInt8)? = nil
+    canvas : Canvas? = nil
+    idat_parser : ParserIDAT? = nil
 
-    debug "#{header_chunk.width}x#{header_chunk.height}"
-    debug header_chunk.options
-    data = IO::Memory.new
+    png_magic = Bytes.new(8)
+    io.read_fully(png_magic)
+    raise Error.new("PNG magic mismatch: #{png_magic}") unless png_magic == MAGIC
 
     loop do
-      chunk_type = Chunk.read(io) do |crc_io, byte_size, chunk_type|
-        debug "Chunk: #{chunk_type} (#{byte_size})"
-        buffer = Bytes.new(byte_size)
-        crc_io.read_fully(buffer)
-        data.write(buffer) if chunk_type == "IDAT"
-        chunk_type
+      Chunk.read(io) do |io, byte_size, chunk_type|
+        case chunk_type
+        when "IHDR"
+          header = PNG.parse_IHDR(io)
+          PNG.debug header
+          canvas = Canvas.new(header)
+          PNG.debug "Expecting #{header.data_size} byte canvas"
+          idat_parser = ParserIDAT.new(canvas)
+        when "PLTE"
+          raise Error.new("PLTE read before header") if header.nil?
+          palette = PNG.parse_PLTE(io, byte_size)
+          canvas.not_nil!.palette = palette
+        when "IDAT"
+          raise Error.new("IDAT read before header") if header.nil?
+          idat_parser.not_nil!.parse(io, byte_size)
+        when "IEND" then finished = true
+        else
+          PNG.debug "(ignored chunk)"
+        end
       end
 
-      break if chunk_type == EndChunk::TYPE
+      break if finished
     end
 
-    data_chunk = Compress::Zlib::Reader.open(data.rewind) do |inflate|
-      DataChunk.parse(
-        inflate,
-        header_chunk.width,
-        header_chunk.height,
-        header_chunk.options
-      )
-    end
-
-    {header: header_chunk, data: data_chunk}
+    canvas.not_nil!
   end
 
-  def self.read(path : String)
-    File.open(path, "rb") do |io|
-      self.read(io)
+  def self.write(canvas : Canvas, path : String)
+    File.open(path, "w") do |file|
+      PNG.write(canvas, file)
     end
+  end
+
+  def self.write(canvas : Canvas, io : IO)
+    io.write(MAGIC)
+    canvas.header.write(io)
+
+    if canvas.header.color_type.indexed?
+      if palette = canvas.palette
+        Chunk.write("PLTE", io, palette)
+      else
+        raise Error.new("Missing palette for Indexed color type")
+      end
+    end
+
+    Chunk.write("IDAT", io) do |data|
+      previous : Scanline? = nil
+
+      Compress::Zlib::Writer.open(data) do |deflate|
+        case canvas.header.interlacing
+        when .none?
+          0u32.upto(canvas.height - 1) do |y|
+            # TODO: Choose the smallest filter method
+            bpr = canvas.bytes_per_row
+            offset = y * bpr
+            scanline = Scanline.new(canvas.header, FilterMethod::None, canvas.data[offset...(offset + bpr)])
+
+            deflate.write_byte(scanline.filter.value)
+            scanline.filter(previous) do |byte|
+              deflate.write_byte(byte)
+            end
+            previous = scanline
+          end
+        else
+          # TODO: Write Adam7 interlacing
+          raise Error.new("Can't write #{canvas.header.interlacing}")
+        end
+      end
+    end
+
+    Chunk.write("IEND", io, Bytes[])
   end
 end

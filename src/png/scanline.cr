@@ -1,22 +1,91 @@
-module PNG
-  # @see https://www.w3.org/TR/png-3/#9Filters
-  #
-  struct Scanline
-    property data : Bytes
-    @bytes_per_pixel : UInt32
+require "./enums/filter_method"
 
-    def initialize(@data, @bytes_per_pixel)
+module PNG
+  # A row of pixels including their filtering method
+  struct Scanline
+    property header : Header
+    property filter : FilterMethod
+    property data : Bytes
+
+    delegate :[], :[]?, to: @data
+    delegate :bytes_per_pixel, :bits_per_pixel, :bit_depth, :channels, to: @header
+
+    def initialize(@header, @filter, @data)
+    end
+
+    # Return the bytes that represent a pixel at x in this scanline
+    def pixel(x : Int) : Bytes
+      case bit_depth
+      when 1, 2, 4
+        shift = 8u8 - bit_depth
+        max = UInt8::MAX >> shift
+
+        Bytes.new(channels.to_i32) do |n|
+          byte, bit = ((x * bits_per_pixel) + (n * bit_depth)).divmod(8)
+          (@data[byte] >> (shift - bit)) & max
+        end
+      when 8, 16
+        byte = (x * bits_per_pixel) // 8
+        @data[byte...(byte + (bits_per_pixel // 8))]
+      else
+        raise Error.new("Invalid bit depth: #{bit_depth}")
+      end
     end
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    # Run the sub filter strategy yielding each modified byte to the block
-    #
-    def sub(&block : UInt8 -> Nil)
-      @data[...@bytes_per_pixel].each { |d| yield d }
+    # Remove any filtering in this scanline
+    # @see https://www.w3.org/TR/png-3/#9Filters
+    def unfilter(previous : Scanline?)
+      case @filter
+      when FilterMethod::None
+      when FilterMethod::Sub     then unsub
+      when FilterMethod::Up      then unup(previous)
+      when FilterMethod::Average then unaverage(previous)
+      when FilterMethod::Paeth   then unpaeth(previous)
+      else                            PNG.debug "Unsupported filter method: #{@filter}"
+      end
+    end
 
-      (@bytes_per_pixel...@data.size).each do |i|
-        yield @data[i] &- @data[i - @bytes_per_pixel]
+    # Apply a filter
+    def filter(previous : Scanline?, &block : UInt8 -> Nil)
+      case @filter
+      when FilterMethod::None    then none(&block)
+      when FilterMethod::Sub     then sub(&block)
+      when FilterMethod::Up      then up(previous, &block)
+      when FilterMethod::Average then average(previous, &block)
+      when FilterMethod::Paeth   then paeth(previous, &block)
+      else                            PNG.debug "Unsupported filter method: #{@filter}"
+      end
+    end
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    def none
+      @data.each { |d| yield d }
+    end
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    # Remove the sub filter
+    # Recon(x) = Filt(x) + Recon(a)
+    def unsub
+      bytes = bytes_per_pixel
+
+      (bytes.to_u32...@data.size).each do |x|
+        a = x - bytes
+        @data[x] = @data[x] &+ @data[a]
+      end
+    end
+
+    # Filt(x) = Orig(x) - Orig(a)
+    # Run the sub filter strategy yielding each modified byte to the block
+    def sub(&block : UInt8 -> Nil)
+      bytes = bytes_per_pixel
+      @data[...bytes].each { |d| yield d }
+
+      (bytes...@data.size).each do |x|
+        a = x - bytes
+        yield @data[x] &- @data[a]
       end
     end
 
@@ -27,20 +96,17 @@ module PNG
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    # Remove the sub filter
-    #
-    def unsub!
-      (@bytes_per_pixel...@data.size).each do |x|
-        a = x - @bytes_per_pixel
-        @data[x] = @data[x] &+ @data[a]
+    # Remove the up filter
+    def unup(other : Scanline?)
+      other.try do |other|
+        (0...@data.size).each do |i|
+          @data[i] = @data[i] &+ (other[i]? || 0u8)
+        end
       end
     end
 
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    # Subtract the previous row from this one
-    #
-    def up(other : Bytes, &block : UInt8 -> Nil)
+    # Filt(x) = Orig(x) - Orig(b)
+    def up(other : Scanline, &block : UInt8 -> Nil)
       (0...@data.size).each do |i|
         yield @data[i] &- other[i]
       end
@@ -52,82 +118,97 @@ module PNG
     end
 
     # :ditto:
-    def up(other : Bytes?, io : IO)
+    def up(other : Scanline?, io : IO)
       up(other) { |byte| io.write_byte(byte) }
-    end
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    # Remove the up filter
-    #
-    def unup!(other : Bytes)
-      other.try do |other|
-        (0...@data.size).each do |i|
-          @data[i] = @data[i] &+ (other[i]? || 0u8)
-        end
-      end
-    end
-
-    # :ditto:
-    def unup!(other : Nil)
-    end
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    # Apply the average filter
-    # `Filt(x) = Orig(x) - floor((Orig(a) + Orig(b)) / 2)`
-    #
-    def average(other : Bytes, &block : UInt8 -> Nil)
-      (0...@data.size).each do |i|
-        b = other[i]
-        a = i < @bytes_per_pixel ? 0u16 : @data[i - @bytes_per_pixel].to_u16
-        yield @data[i] &- ((a + b) >> 1)
-      end
-    end
-
-    # :ditto:
-    def average(other : Nil, &block : UInt8 -> Nil)
-      (0...@data.size).each do |i|
-        a = i < @bytes_per_pixel ? 0u16 : @data[i - @bytes_per_pixel].to_u16
-        yield @data[i] &- (a >> 1)
-      end
-    end
-
-    # :ditto:
-    def average(other : Bytes?, io : IO)
-      average(other) { |byte| io.write_byte(byte) }
     end
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     # Removes the type 3 Average filter via:
     # `Recon(x) = Filt(x) + floor((Recon(a) + Recon(b)) / 2)`
-    #
-    def unaverage!(other : Bytes)
+    def unaverage(other : Scanline)
+      bytes = bytes_per_pixel
+
       (0...@data.size).each do |i|
         b = other[i]
-        a = i < @bytes_per_pixel ? 0u16 : @data[i - @bytes_per_pixel].to_u16
+        a = i < bytes ? 0u16 : @data[i - bytes].to_u16
         @data[i] = @data[i] &+ ((a + b) >> 1)
       end
     end
 
     # :ditto:
-    def unaverage!(other : Nil)
+    def unaverage(other : Nil)
+      bytes = bytes_per_pixel
+
       (0...@data.size).each do |i|
-        a = i < @bytes_per_pixel ? 0u8 : @data[i - @bytes_per_pixel]
+        a = i < bytes ? 0u8 : @data[i - bytes]
         @data[i] = @data[i] &+ (a >> 1)
       end
     end
 
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    # Filt(x) = Orig(x) - floor((Orig(a) + Orig(b)) / 2)
+    def average(other : Scanline, &block : UInt8 -> Nil)
+      bytes = bytes_per_pixel
 
-    # Use the Paeth filter strategy
-    #
-    def paeth(other : Bytes, &block : UInt8 -> Nil)
       (0...@data.size).each do |i|
         b = other[i]
-        a = i < @bytes_per_pixel ? 0u8 : @data[i - @bytes_per_pixel]
-        c = i < @bytes_per_pixel ? 0u8 : other[i - @bytes_per_pixel]
+        a = i < bytes ? 0u16 : @data[i - bytes].to_u16
+        yield @data[i] &- ((a + b) >> 1)
+      end
+    end
+
+    # :ditto:
+    def average(other : Nil, &block : UInt8 -> Nil)
+      bytes = bytes_per_pixel
+
+      (0...@data.size).each do |i|
+        a = i < bytes ? 0u16 : @data[i - bytes].to_u16
+        yield @data[i] &- (a >> 1)
+      end
+    end
+
+    # :ditto:
+    def average(other : Scanline?, io : IO)
+      average(other) { |byte| io.write_byte(byte) }
+    end
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    # Remove the Paeth filter type
+    # `Recon(x) = Filt(x) + PaethPredictor(Recon(a), Recon(b), Recon(c))`
+    def unpaeth(other : Scanline)
+      bytes = bytes_per_pixel
+
+      (0...@data.size).each do |i|
+        b = other[i]
+        a = i < bytes ? 0u8 : @data[i - bytes]
+        c = i < bytes ? 0u8 : other[i - bytes]
+
+        @data[i] = @data[i] &+ paeth_predict(a, b, c)
+      end
+    end
+
+    # :ditto:
+    def unpaeth(other : Nil)
+      bytes = bytes_per_pixel
+
+      (0...@data.size).each do |i|
+        b = 0u8
+        a = i < bytes ? 0u8 : @data[i - bytes]
+        c = 0u8
+
+        @data[i] = @data[i] &+ paeth_predict(a, b, c)
+      end
+    end
+
+    # Filt(x) = Orig(x) - PaethPredictor(Orig(a), Orig(b), Orig(c))
+    def paeth(other : Scanline, &block : UInt8 -> Nil)
+      bytes = bytes_per_pixel
+
+      (0...@data.size).each do |i|
+        b = other[i]
+        a = i < bytes ? 0u8 : @data[i - bytes]
+        c = i < bytes ? 0u8 : other[i - bytes]
 
         yield @data[i] &- paeth_predict(a, b, c)
       end
@@ -135,9 +216,11 @@ module PNG
 
     # :ditto:
     def paeth(other : Nil, &block : UInt8 -> Nil)
+      bytes = bytes_per_pixel
+
       (0...@data.size).each do |i|
         b = 0u8
-        a = i < @bytes_per_pixel ? 0u8 : @data[i - @bytes_per_pixel]
+        a = i < bytes ? 0u8 : @data[i - bytes]
         c = 0u8
 
         yield @data[i] &- paeth_predict(a, b, c)
@@ -145,34 +228,8 @@ module PNG
     end
 
     # :ditto:
-    def paeth(other : Bytes?, io : IO)
+    def paeth(other : Scanline?, io : IO)
       paeth(other) { |byte| io.write_byte(byte) }
-    end
-
-    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    # Remove the Paeth filter type
-    # `Recon(x) = Filt(x) + PaethPredictor(Recon(a), Recon(b), Recon(c))`
-    #
-    def unpaeth!(other : Bytes)
-      (0...@data.size).each do |i|
-        b = other[i]
-        a = i < @bytes_per_pixel ? 0u8 : @data[i - @bytes_per_pixel]
-        c = i < @bytes_per_pixel ? 0u8 : other[i - @bytes_per_pixel]
-
-        @data[i] = @data[i] &+ paeth_predict(a, b, c)
-      end
-    end
-
-    # :ditto:
-    def unpaeth!(other : Nil)
-      (0...@data.size).each do |i|
-        b = 0u8
-        a = i < @bytes_per_pixel ? 0u8 : @data[i - @bytes_per_pixel]
-        c = 0u8
-
-        @data[i] = @data[i] &+ paeth_predict(a, b, c)
-      end
     end
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
