@@ -33,7 +33,7 @@ module PNG
 
     def write(slice : Bytes) : Nil
       @input += slice
-      @stream.avail_in += @input.size.to_u32
+      @stream.avail_in = @input.size.to_u32
       @stream.next_in = @input.to_unsafe
     end
 
