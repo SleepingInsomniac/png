@@ -20,21 +20,24 @@ module PNG
 
     getter? ended = false
 
-    def initialize(@input = Bytes.new(0))
+    def initialize
+      @input = IO::Memory.new
       @stream = LibZ::ZStream.new
       @stream.zalloc = LibZ::AllocFunc.new { |opaque, items, size| GC.malloc(items * size) }
       @stream.zfree = LibZ::FreeFunc.new { |opaque, address| GC.free(address) }
-      @stream.avail_in = @input.size.to_u32
-      @stream.next_in = @input.to_unsafe
+      @stream.avail_in = 0u32
+      @stream.next_in = @input.buffer
 
       ret = LibZ.inflateInit2(pointerof(@stream), -LibZ::MAX_BITS, LibZ.zlibVersion, sizeof(LibZ::ZStream))
       raise Error.new(ret, @stream) unless ret.ok?
     end
 
     def write(slice : Bytes) : Nil
-      @input += slice
-      @stream.avail_in = @input.size.to_u32
-      @stream.next_in = @input.to_unsafe
+      pos = @input.pos
+      @input.write(slice)
+      @input.pos = pos
+      @stream.avail_in = @input.size.to_u32 - @input.pos
+      @stream.next_in = @input.buffer + @input.pos
     end
 
     def read(slice : Bytes) : Int32
@@ -58,7 +61,9 @@ module PNG
       end
 
       input_bytes_read = start_avail_in - @stream.avail_in
-      @input = @input[input_bytes_read..]
+      @input.skip(input_bytes_read)
+      @stream.avail_in = @input.size.to_u32 - @input.pos
+      @stream.next_in = @input.buffer + @input.pos
 
       bytes_read
     end
