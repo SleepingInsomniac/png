@@ -13,10 +13,36 @@ module PNG
     def initialize(@header, @filter, @data)
     end
 
+    # Calculates the index into the canvas that a value would be at, accounting
+    # for padding that would exist at the end of a scanline where bit depth < 8
+    def bit_index(x : UInt32, y : UInt32)
+      (y * header.bytes_per_row * 8) + (x * @header.bits_per_pixel)
+    end
+
+    # Sets a pixel in this scanline based on the header
+    #
+    def set_pixel(x : Int, values : Bytes) : Nil
+      case bit_depth
+      when .< 8
+        shift = 8u8 - bit_depth
+        max = UInt8::MAX >> shift
+
+        channels.times do |n|
+          byte, bit = ((x * bits_per_pixel) + (n * bit_depth)).divmod(8)
+          @data[byte] |= values[n] << (8 &- bit_depth - bit)
+        end
+      when 8, 16
+        byte = (x * bits_per_pixel) // 8
+        values.each_with_index { |v, n| @data[byte + n] = v }
+      else
+        raise Error.new("Invalid bit depth: #{bit_depth}")
+      end
+    end
+
     # Return the bytes that represent a pixel at x in this scanline
     def pixel(x : Int) : Bytes
       case bit_depth
-      when 1, 2, 4
+      when .< 8
         shift = 8u8 - bit_depth
         max = UInt8::MAX >> shift
 

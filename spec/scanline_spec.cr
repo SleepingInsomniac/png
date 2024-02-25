@@ -43,4 +43,33 @@ describe PNG::Scanline do
       end
     end
   end
+
+  describe "#set_pixel" do
+    it "sets pixel values at 1-bit grayscale" do
+      header = PNG::Header.new(3, 1, bit_depth: 1u8, color_type: PNG::ColorType::Grayscale)
+      line = PNG::Scanline.new(header, PNG::FilterMethod::None, Bytes[0b0000_0000])
+      line.set_pixel(0, Bytes[0b0000_0001])
+      line.set_pixel(2, Bytes[0b0000_0001])
+
+      line.data.should eq(Bytes[0b1010_0000])
+    end
+
+    it "sets pixel values at 2-bit grayscale" do
+      header = PNG::Header.new(3, 1, bit_depth: 2u8, color_type: PNG::ColorType::Grayscale)
+      line = PNG::Scanline.new(header, PNG::FilterMethod::None, Bytes[0b0000_0000])
+      line.set_pixel(0, Bytes[0b0000_0011])
+      line.set_pixel(2, Bytes[0b0000_0011])
+
+      line.data.should eq(Bytes[0b1100_1100])
+    end
+
+    it "sets pixel values at 4-bit grayscale" do
+      header = PNG::Header.new(3, 1, bit_depth: 4u8, color_type: PNG::ColorType::Grayscale)
+      line = PNG::Scanline.new(header, PNG::FilterMethod::None, Bytes[0b0000_0000, 0b0000_0000])
+      line.set_pixel(0, Bytes[0b0000_1111])
+      line.set_pixel(2, Bytes[0b0000_1111])
+
+      line.data.should eq(Bytes[0b1111_0000, 0b1111_0000])
+    end
+  end
 end

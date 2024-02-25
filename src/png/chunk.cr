@@ -1,51 +1,34 @@
 require "digest/crc32"
 require "digest/io_digest"
 
-require "./enums/color_type"
-require "./enums/compression_method"
-require "./enums/filter_type"
-require "./enums/interlacing"
-
 module PNG
-  module Chunk
+  class Chunk
     class CRCMismatch < Error
     end
 
-    def self.read(io : IO, check_crc = true)
+    def self.read(io : IO)
       byte_size = io.read_bytes(UInt32, IO::ByteFormat::BigEndian)
       crc_io = IO::Digest.new(io, Digest::CRC32.new, IO::Digest::DigestMode::Read)
-      buffer = Bytes.new(4)
-      crc_io.read_fully(buffer)
-      chunk_type = String.new(buffer)
-
-      PNG.debug " => Reading '#{chunk_type}' (#{byte_size} bytes)"
-
-      start_pos = io.pos
+      chunk_type_bytes = Bytes.new(4)
+      crc_io.read_fully(chunk_type_bytes)
+      chunk_type = String.new(chunk_type_bytes)
       sized_io = IO::Sized.new(crc_io, byte_size)
-      chunk = yield sized_io, byte_size, chunk_type
-      end_pos = io.pos
-      bytes_read = end_pos - start_pos
+
+      yield chunk_type, sized_io, byte_size
 
       # Skip whatever was left over (ex: zlib adler32)
-      if bytes_read < byte_size
-        PNG.debug "Skipping #{byte_size - bytes_read} bytes"
-        crc_io.skip(byte_size - bytes_read)
+      crc_io.skip(sized_io.read_remaining)
+
+      # Check the crc32
+      crc32_expected = Bytes.new(4)
+      io.read_fully(crc32_expected)
+      crc32_calculated = crc_io.final
+
+      if crc32_expected != crc32_calculated
+        raise CRCMismatch.new("Crc32 mismatch - expected: #{crc32_expected}, actual: #{crc32_calculated}")
       end
 
-      if check_crc
-        # Check the crc32
-        crc32_expected = Bytes.new(4)
-        io.read_fully(crc32_expected)
-        crc32_calculated = crc_io.final
-
-        if crc32_expected != crc32_calculated
-          raise CRCMismatch.new("Crc32 mismatch - expected: #{crc32_expected}, actual: #{crc32_calculated}")
-        end
-      else
-        io.skip(4) # Skip the crc32
-      end
-
-      chunk
+      chunk_type
     end
 
     # Write a chunk to the PNG stream
@@ -84,6 +67,18 @@ module PNG
       crc_io << chunk_type
       yield crc_io
       io.write(crc_io.final)
+    end
+
+    @chunk_type : String
+    @data : Bytes
+
+    def initialize(@chunk_type, io : IO::Sized)
+      @data = Bytes.new(io.read_remaining)
+      io.read(@data)
+    end
+
+    def write
+      self.class.write(@chunk_type, IO::Memory.new(@data))
     end
   end
 end

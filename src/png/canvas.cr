@@ -21,14 +21,14 @@ module PNG
       else
         @header = Header.new(width, height, color_type: ColorType::Indexed)
       end
-      @data = Bytes.new(@header.data_size)
+      @data = Bytes.new(@header.byte_size)
     end
 
     def initialize(@header, data : Bytes? = nil, @palette = nil)
       if d = data
         @data = d
       else
-        @data = Bytes.new(@header.data_size)
+        @data = Bytes.new(@header.byte_size)
       end
     end
 
@@ -102,41 +102,7 @@ module PNG
 
     # Get the color at x, y
     def color(x, y)
-      colors = self[x, y]
-
-      if @header.bit_depth < 8 && !@header.color_type.indexed?
-        # Convert a lower bit value to it's 8bit equivalent
-        shift = 8u8 - @header.bit_depth
-        max = UInt8::MAX >> shift
-        colors = colors.map { |c| UInt8.new((c / max) * UInt8::MAX) }
-      end
-
-      if @header.bit_depth == 16
-        colors = colors.each_slice(2).map { |(b0, b1)| (b0.to_u16 << 8) | b1 }.to_a.as(Array(UInt16))
-
-        case @header.color_type
-        when ColorType::Grayscale      then Gray(UInt16).new(colors[0])
-        when ColorType::GrayscaleAlpha then GrayAlpha(UInt16).new(colors[0], colors[1])
-        when ColorType::TrueColor      then RGB(UInt16).new(colors[0], colors[1], colors[2])
-        when ColorType::TrueColorAlpha then RGBA(UInt16).new(colors[0], colors[1], colors[2], colors[3])
-        else
-          raise Error.new("Invalid color type: #{@header.color_type} for #{@header.bit_depth} bits")
-        end
-      else
-        colors = colors.as(Slice(UInt8))
-        case @header.color_type
-        when ColorType::Indexed
-          p_index = colors[0].to_u32 * 3
-          r, g, b = @palette.not_nil![p_index..(p_index + 2)]
-          RGB(UInt8).new(r, g, b)
-        when ColorType::Grayscale      then Gray(UInt8).new(colors[0])
-        when ColorType::GrayscaleAlpha then GrayAlpha(UInt8).new(colors[0], colors[1])
-        when ColorType::TrueColor      then RGB(UInt8).new(colors[0], colors[1], colors[2])
-        when ColorType::TrueColorAlpha then RGBA(UInt8).new(colors[0], colors[1], colors[2], colors[3])
-        else
-          raise Error.new("Invalid color type: #{@header.color_type} for #{@header.bit_depth} bits")
-        end
-      end
+      @header.colorize(self[x, y], @palette)
     end
   end
 end

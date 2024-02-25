@@ -29,9 +29,13 @@ end
 
 start_time = Time.monotonic
 
-Dir.glob("spec/fixtures/png-suite/*i*.png").sort.each do |path|
+Dir.glob("spec/fixtures/png-suite/*.png").sort.each do |path|
+  next if File.basename(path).starts_with?('x')
+
   canvas = PNG.read(path)
   print_canvas(canvas)
+  basename = File.basename(path)
+  PNG.write("tmp/#{basename}", canvas)
   puts "✅ #{path}"
 rescue e
   puts "❌ #{path} : #{e}"

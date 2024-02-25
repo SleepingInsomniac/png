@@ -1,6 +1,4 @@
 module PNG
-  # This is technically a bitmask: Alpha, Color, Palette
-  # But it's easier to reprsent like this
   enum ColorType : UInt8
     Grayscale      = 0
     TrueColor      = 2

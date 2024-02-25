@@ -1,3 +1,5 @@
+require "./enums/*"
+
 module PNG
   struct Header
     property width : UInt32
@@ -9,6 +11,18 @@ module PNG
     property interlacing : Interlacing
 
     delegate :channels, to: @color_type
+
+    def self.parse(io : IO)
+      new(
+        width: io.read_bytes(UInt32, IO::ByteFormat::BigEndian),
+        height: io.read_bytes(UInt32, IO::ByteFormat::BigEndian),
+        bit_depth: io.read_bytes(UInt8),
+        color_type: ColorType.new(io.read_bytes(UInt8)),
+        compression_method: CompressionMethod.new(io.read_bytes(UInt8)),
+        filter_type: FilterType.new(io.read_bytes(UInt8)),
+        interlacing: Interlacing.new(io.read_bytes(UInt8))
+      )
+    end
 
     def initialize(
       @width,
@@ -39,8 +53,46 @@ module PNG
     end
 
     # Total bytesize including row padding, not including filter bytes
-    def data_size
+    def byte_size
       bytes_per_row * height
+    end
+
+    # Convert bytes into a color struct
+    def colorize(colors : Bytes, palette : Bytes? = nil)
+      if bit_depth < 8 && !color_type.indexed?
+        # Convert a lower bit value to it's 8bit equivalent
+        shift = 8u8 - bit_depth
+        max = UInt8::MAX >> shift
+        colors = colors.map { |c| UInt8.new((c / max) * UInt8::MAX) }
+      end
+
+      if bit_depth == 16
+        colors = colors.each_slice(2).map { |(b0, b1)| (b0.to_u16 << 8) | b1 }.to_a.as(Array(UInt16))
+
+        case color_type
+        when .grayscale?        then Gray(UInt16).new(colors[0])
+        when .grayscale_alpha?  then GrayAlpha(UInt16).new(colors[0], colors[1])
+        when .true_color?       then RGB(UInt16).new(colors[0], colors[1], colors[2])
+        when .true_color_alpha? then RGBA(UInt16).new(colors[0], colors[1], colors[2], colors[3])
+        else
+          raise Error.new("Invalid color type: #{color_type} for #{bit_depth} bits")
+        end
+      else
+        colors = colors.as(Slice(UInt8))
+        case color_type
+        when .indexed?
+          raise Error.new("Palette required for indexed images") unless palette
+          p_index = colors[0].to_u32 * 3
+          r, g, b = palette[p_index..(p_index + 2)]
+          RGB(UInt8).new(r, g, b)
+        when .grayscale?        then Gray(UInt8).new(colors[0])
+        when .grayscale_alpha?  then GrayAlpha(UInt8).new(colors[0], colors[1])
+        when .true_color?       then RGB(UInt8).new(colors[0], colors[1], colors[2])
+        when .true_color_alpha? then RGBA(UInt8).new(colors[0], colors[1], colors[2], colors[3])
+        else
+          raise Error.new("Invalid color type: #{color_type} for #{bit_depth} bits")
+        end
+      end
     end
 
     def write(io : IO)
