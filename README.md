@@ -59,7 +59,7 @@ end
 PNG.write("examples/test_pattern.png", canvas)
 ```
 
-![1Bit B/W](examples/1bit_checker.png)
+![Test pattern](examples/test_pattern.png)
 
 ```crystal
 require "png"
@@ -75,7 +75,7 @@ end
 PNG.write("examples/1bit_checker.png", canvas)
 ```
 
-![Test pattern](examples/test_pattern.png)
+![1Bit B/W](examples/1bit_checker.png)
 
 ___
 
