@@ -108,10 +108,24 @@ All PNG color types and bit depths are supported for reading / writing
 | None  | r/w |
 | Adam7 | r/w |
 
+#### Ancillary Chunks
 
-#### TODO List
-- Heuristics for each row to determine the best filter method
-- Ancillary Chunks
+| Name | Support |
+|------|---------|
+| cHRM | -       |
+| gAMA | Yes     |
+| iCCP | -       |
+| sBIT | -       |
+| sRGB | -       |
+| bKGD | Yes     |
+| hIST | -       |
+| tRNS | -       |
+| pHYs | Yes     |
+| sPLT | -       |
+| tIME | Yes     |
+| iTXt | -       |
+| tEXt | -       |
+| zTXt | -       |
 
 ## Contributing
 

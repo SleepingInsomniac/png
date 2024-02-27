@@ -14,7 +14,11 @@ module PNG
       chunk_type = String.new(chunk_type_bytes)
       sized_io = IO::Sized.new(crc_io, byte_size)
 
-      yield chunk_type, sized_io, byte_size
+      begin
+        yield chunk_type, sized_io, byte_size
+      rescue e
+        PNG.debug "Chunk read error: #{e}"
+      end
 
       # Skip whatever was left over (ex: zlib adler32)
       crc_io.skip(sized_io.read_remaining)

@@ -79,7 +79,6 @@ module PNG
               break if pixel >= pixel_size
 
               if parser.next
-                # print_canvas(canvas)
                 previous.data = Bytes.new(parser.scanline_size)
                 row_buffer = Bytes.new(parser.scanline_size + 1)
               else
@@ -87,6 +86,27 @@ module PNG
               end
             end
           end
+        when "pHYs"
+          canvas.pixel_size = PixelSize.parse(io)
+          PNG.debug "pHYs: #{canvas.pixel_size}"
+        when "bKGD"
+          bg_color = Bytes.new(header.bytes_per_pixel)
+          io.read_fully(bg_color)
+          canvas.bg_color = bg_color
+          PNG.debug "bKGD: #{bg_color}"
+        when "tIME"
+          year = io.read_bytes(UInt16, IO::ByteFormat::BigEndian).to_i32
+          month = io.read_bytes(UInt8).to_i32
+          day = io.read_bytes(UInt8).to_i32
+          hour = io.read_bytes(UInt8).to_i32
+          minute = io.read_bytes(UInt8).to_i32
+          second = io.read_bytes(UInt8).to_i32
+          canvas.last_modified = Time.utc(year, month, day, hour, minute, second)
+          PNG.debug "tIME: #{canvas.last_modified}"
+        when "gAMA"
+          canvas.gama = io.read_bytes(UInt32, IO::ByteFormat::BigEndian)
+          PNG.debug "gAMA: #{canvas.gama}"
+        when "IEND"
         else
           PNG.debug "Ignoring #{chunk_type} chunk"
         end
@@ -108,12 +128,35 @@ module PNG
     io.write(MAGIC)
     canvas.header.write(io)
 
+    if last_modified = canvas.last_modified
+      Chunk.write("tIME", io) do |data|
+        year = data.write_bytes(last_modified.year.to_u16, IO::ByteFormat::BigEndian)
+        month = data.write_byte(last_modified.month.to_u8)
+        day = data.write_byte(last_modified.day.to_u8)
+        hour = data.write_byte(last_modified.hour.to_u8)
+        minute = data.write_byte(last_modified.minute.to_u8)
+        second = data.write_byte(last_modified.second.to_u8)
+      end
+    end
+
+    if pixel_size = canvas.pixel_size
+      Chunk.write("pHYs", io) { |data| pixel_size.write(data) }
+    end
+
+    if gama = canvas.gama
+      Chunk.write("gAMA", io) { |data| data.write_bytes(gama, IO::ByteFormat::BigEndian) }
+    end
+
     if canvas.header.color_type.indexed?
       if palette = canvas.palette
         Chunk.write("PLTE", io, palette)
       else
         raise Error.new("Missing palette for Indexed color type")
       end
+    end
+
+    if bg_color = canvas.bg_color
+      Chunk.write("bKGD", io, bg_color)
     end
 
     Chunk.write("IDAT", io) do |data|

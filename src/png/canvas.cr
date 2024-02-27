@@ -6,9 +6,13 @@ require "./colors/gray_alpha"
 
 module PNG
   class Canvas
-    property header : Header
-    property data : Bytes
-    property palette : Bytes? = nil
+    property header : Header               # IHDR
+    property data : Bytes                  # IDAT
+    property palette : Bytes? = nil        # PLTE
+    property pixel_size : PixelSize? = nil # pHYs
+    property bg_color : Bytes? = nil       # bKGD
+    property last_modified : Time? = nil   # tIME
+    property gama : UInt32? = nil          # gAMA
 
     delegate :width, :height,
       :bit_depth, :bits_per_pixel, :bytes_per_pixel, :bytes_per_row,

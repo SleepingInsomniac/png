@@ -1,4 +1,5 @@
 require "./enums/*"
+require "./pixel_size"
 
 module PNG
   struct Header
