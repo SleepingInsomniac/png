@@ -25,6 +25,8 @@ module PNG
   # "\x89PNG\r\n\x1a\n"
   MAGIC = Bytes[137, 80, 78, 71, 13, 10, 26, 10]
 
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
   def self.read(path : String)
     PNG.debug "Reading path: #{path}"
     File.open(path, "rb") { |io| self.read(io) }
@@ -118,12 +120,16 @@ module PNG
     canvas
   end
 
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  # Write a *canvas* to a .png file given a *path*
   def self.write(path : String, canvas : Canvas)
     File.open(path, "w") do |file|
       PNG.write(file, canvas)
     end
   end
 
+  # Write a *canvas* to a given *io* in png format.
   def self.write(io : IO, canvas : Canvas)
     io.write(MAGIC)
     canvas.header.write(io)
