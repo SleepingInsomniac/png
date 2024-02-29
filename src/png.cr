@@ -9,7 +9,7 @@ require "./png/chunk"
 require "./png/canvas"
 
 module PNG
-  # Only logs messages if built with `-Dpng-PNG.debug`
+  # Only logs messages if built with `-DDpng-debug`
   macro debug(args)
     {% if flag?(:"png-debug") %}
       if typeof({{args}}) == String
