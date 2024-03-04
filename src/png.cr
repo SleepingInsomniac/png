@@ -9,7 +9,7 @@ require "./png/chunk"
 require "./png/canvas"
 
 module PNG
-  # Only logs messages if built with `-DDpng-debug`
+  # Only logs messages if built with `-Dpng-debug`
   macro debug(args)
     {% if flag?(:"png-debug") %}
       if typeof({{args}}) == String
@@ -22,17 +22,26 @@ module PNG
 
   VERSION = {{`shards version`.stringify.chomp}}
 
-  # "\x89PNG\r\n\x1a\n"
+  # MAGIC is the first 8 bytes of a PNG file: "\x89PNG\r\n\x1a\n"
   MAGIC = Bytes[137, 80, 78, 71, 13, 10, 26, 10]
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  def self.read(path : String)
+  # Reads a png stream returns a *PNG::Canvas*
+  #
+  # ```
+  # canvas = PNG.read("examples/gradient.png")
+  # canvas.header.color_type # => PNG::ColorType::RGB
+  # canvas[0, 0]             # => Bytes[0, 255, 0]
+  # ```
+  #
+  def self.read(path : String) : Canvas
     PNG.debug "Reading path: #{path}"
     File.open(path, "rb") { |io| self.read(io) }
   end
 
-  def self.read(io : IO)
+  # :ditto:
+  def self.read(io : IO) : Canvas
     png_magic = Bytes.new(8)
     io.read_fully(png_magic)
     raise Error.new("PNG magic mismatch: #{png_magic}") unless png_magic == MAGIC
@@ -123,6 +132,17 @@ module PNG
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   # Write a *canvas* to a .png file given a *path*
+  #
+  # ```
+  # canvas = PNG::Canvas.new(255, 255)
+  # 0.upto(canvas.height - 1) do |y|
+  #   0.upto(canvas.width - 1) do |x|
+  #     canvas[x, y] = Bytes[x, 255, y]
+  #   end
+  # end
+  #
+  # PNG.write("examples/gradient.png", canvas)
+  # ```
   def self.write(path : String, canvas : Canvas)
     File.open(path, "w") do |file|
       PNG.write(file, canvas)

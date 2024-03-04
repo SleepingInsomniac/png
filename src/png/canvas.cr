@@ -1,10 +1,8 @@
-require "./colors/hsv"
-require "./colors/rgb"
-require "./colors/rgba"
-require "./colors/gray"
-require "./colors/gray_alpha"
+require "./colors"
 
 module PNG
+  # A canvas holds all of the PNG data including the header and other chunk information
+  #
   class Canvas
     property header : Header               # IHDR
     property data : Bytes                  # IDAT
@@ -50,7 +48,15 @@ module PNG
       bit_index(x, y) // 8
     end
 
-    # Set the pixel at x, y into the canvas
+    # Set the pixel at *x*, *y* on the canvas via bytes that correspond to the
+    # color type and bit depth.
+    #
+    # For example, an image with 8bits per channel in RGB (`PNG::ColorType::TrueColor`)
+    # would be set with 3 bytes: `canvas[0, 0] = Bytes[255, 0, 255]`
+    #
+    # A canvas with 16bits in RGB would accept 6 bytes, (2 bytes per channel):
+    # `canvas[0, 0] = Bytes[255, 255, 0, 0, 255, 255]`
+    #
     def []=(x : UInt32, y : UInt32, values : Enumerable(UInt8))
       if values.size != @header.bytes_per_pixel
         raise Error.new("Value must correspond to bit depth and channel count " \
@@ -63,9 +69,9 @@ module PNG
         max = UInt8::MAX >> shift
         bit_offset = bit_index(x, y)
 
-        @header.channels.times do |n|
+        values.each_with_index do |value, n|
           offset, bit = (bit_offset + (bit_depth * n)).divmod(8)
-          @data[offset] |= values[n] << (8 &- @header.bit_depth - bit)
+          @data[offset] |= value << (8 &- @header.bit_depth - bit)
         end
       when 8, 16
         offset = byte_index(x, y)
@@ -79,7 +85,8 @@ module PNG
       self[x.to_u32, y.to_u32] = values
     end
 
-    # Get the pixel at x, y into the canvas
+    # Get the pixel at x, y into the canvas.
+    # This returns the Bytes that represent the pixel.
     def [](x : UInt32, y : UInt32)
       case @header.bit_depth
       when .< 8
@@ -107,6 +114,9 @@ module PNG
     # Get the color at x, y
     def color(x, y)
       @header.colorize(self[x, y], @palette)
+    end
+
+    def set_color(x, y, color)
     end
   end
 end

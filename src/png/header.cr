@@ -82,10 +82,13 @@ module PNG
         colors = colors.as(Slice(UInt8))
         case color_type
         when .indexed?
-          raise Error.new("Palette required for indexed images") unless palette
-          p_index = colors[0].to_u32 * 3
-          r, g, b = palette[p_index..(p_index + 2)]
-          RGB(UInt8).new(r, g, b)
+          if p = palette
+            p_index = colors[0].to_u32 * 3
+            r, g, b = palette[p_index..(p_index + 2)]
+            RGB(UInt8).new(r, g, b)
+          else
+            raise Error.new("Palette required for indexed images")
+          end
         when .grayscale?        then Gray(UInt8).new(colors[0])
         when .grayscale_alpha?  then GrayAlpha(UInt8).new(colors[0], colors[1])
         when .true_color?       then RGB(UInt8).new(colors[0], colors[1], colors[2])

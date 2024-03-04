@@ -1,12 +1,10 @@
 module PNG
-  struct RGBA(T)
-    property r : T
-    property g : T
-    property b : T
-    property a : T = T::MAX
-
-    def initialize(@r, @g, @b, @a = T::MAX)
+  struct RGBA(T) < Color(T, 4)
+    def self.color_type
+      ColorType::TrueColorAlpha
     end
+
+    define_channels [r, g, b, a]
 
     def to_rgb8
       alpha = (a / T::MAX)

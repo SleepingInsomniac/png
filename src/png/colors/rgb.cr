@@ -1,18 +1,7 @@
 module PNG
-  struct RGB(T)
-    property r : T
-    property g : T
-    property b : T
-
-    def initialize(@r, @g, @b)
-    end
-
-    def to_rgb8
-      RGB(UInt8).new(
-        UInt8.new(((r / T::MAX) * UInt8::MAX)),
-        UInt8.new(((g / T::MAX) * UInt8::MAX)),
-        UInt8.new(((b / T::MAX) * UInt8::MAX))
-      )
+  struct RGB(T) < Color(T, 3)
+    def self.color_type
+      ColorType::TrueColor
     end
 
     def self.from_hsv(hsv : HSV)
@@ -37,6 +26,16 @@ module PNG
       b = T.new(((b + m) * T::MAX).clamp(0, T::MAX))
 
       RGB(T).new(r, g, b)
+    end
+
+    define_channels [r, g, b]
+
+    def to_rgb8
+      RGB(UInt8).new(
+        UInt8.new(((r / T::MAX) * UInt8::MAX)),
+        UInt8.new(((g / T::MAX) * UInt8::MAX)),
+        UInt8.new(((b / T::MAX) * UInt8::MAX))
+      )
     end
   end
 end
