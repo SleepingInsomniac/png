@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.10.1">
+<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_name" content="png">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="png">
+  <title>PNG::Gray(T) - png master</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          png
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="png/PNG" data-name="png">
+      <a href="../PNG.html">PNG</a>
+      
+        <ul>
+  
+  <li class=" " data-id="png/PNG/Canvas" data-name="png::canvas">
+      <a href="../PNG/Canvas.html">Canvas</a>
+      
+    </li>
+  
+  <li class="parent " data-id="png/PNG/Chunk" data-name="png::chunk">
+      <a href="../PNG/Chunk.html">Chunk</a>
+      
+        <ul>
+  
+  <li class=" " data-id="png/PNG/Chunk/CRCMismatch" data-name="png::chunk::crcmismatch">
+      <a href="../PNG/Chunk/CRCMismatch.html">CRCMismatch</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Color" data-name="png::color(t, n)">
+      <a href="../PNG/Color.html">Color</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/ColorType" data-name="png::colortype">
+      <a href="../PNG/ColorType.html">ColorType</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/CompressionMethod" data-name="png::compressionmethod">
+      <a href="../PNG/CompressionMethod.html">CompressionMethod</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Error" data-name="png::error">
+      <a href="../PNG/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/FilterMethod" data-name="png::filtermethod">
+      <a href="../PNG/FilterMethod.html">FilterMethod</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/FilterType" data-name="png::filtertype">
+      <a href="../PNG/FilterType.html">FilterType</a>
+      
+    </li>
+  
+  <li class=" current" data-id="png/PNG/Gray" data-name="png::gray(t)">
+      <a href="../PNG/Gray.html">Gray</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/GrayAlpha" data-name="png::grayalpha(t)">
+      <a href="../PNG/GrayAlpha.html">GrayAlpha</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Header" data-name="png::header">
+      <a href="../PNG/Header.html">Header</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/HSV" data-name="png::hsv">
+      <a href="../PNG/HSV.html">HSV</a>
+      
+    </li>
+  
+  <li class="parent " data-id="png/PNG/Inflater" data-name="png::inflater">
+      <a href="../PNG/Inflater.html">Inflater</a>
+      
+        <ul>
+  
+  <li class=" " data-id="png/PNG/Inflater/Error" data-name="png::inflater::error">
+      <a href="../PNG/Inflater/Error.html">Error</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Interlacing" data-name="png::interlacing">
+      <a href="../PNG/Interlacing.html">Interlacing</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Parser" data-name="png::parser">
+      <a href="../PNG/Parser.html">Parser</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/PixelSize" data-name="png::pixelsize">
+      <a href="../PNG/PixelSize.html">PixelSize</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/RGB" data-name="png::rgb(t)">
+      <a href="../PNG/RGB.html">RGB</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/RGBA" data-name="png::rgba(t)">
+      <a href="../PNG/RGBA.html">RGBA</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Scanline" data-name="png::scanline">
+      <a href="../PNG/Scanline.html">Scanline</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">struct</span> PNG::<wbr>Gray(T)
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../PNG/Gray.html">PNG::Gray(T)</a></li><li class="superclass"><a href="../PNG/Color.html">PNG::Color(T, 1)</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/colors/gray.cr#L2" target="_blank">
+        png/colors/gray.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28g%3AT%29-class-method" class="signature"><strong>.new</strong>(g : T)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28channels%29-class-method" class="signature"><strong>.new</strong>(channels)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%28g%3AT%29-class-method" class="signature"><strong>.[]</strong>(g : T)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#color_type-class-method" class="signature"><strong>.color_type</strong></a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#g-instance-method" class="signature"><strong>#g</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#g%3D%28value%3AT%29-instance-method" class="signature"><strong>#g=</strong>(value : T)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_rgb8-instance-method" class="signature"><strong>#to_rgb8</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_s%28io%3AIO%29-instance-method" class="signature"><strong>#to_s</strong>(io : IO)</a>
+        
+          <div class="summary"><p>Same as <code>#inspect(io)</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_u16-instance-method" class="signature"><strong>#to_u16</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_u32-instance-method" class="signature"><strong>#to_u32</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_u8-instance-method" class="signature"><strong>#to_u8</strong></a>
+        
+      </li>
+    
+  </ul>
+
+
+
+<div class="methods-inherited">
+  
+    
+
+  <h3>Instance methods inherited from struct <code><a href="../PNG/Color.html">PNG::Color(T, 1)</a></code></h3>
+  
+  
+    <a href="../PNG/Color.html#%3D%3D%28other%29-instance-method" class="tooltip">
+      <span>==(other)</span>
+    ==</a>, 
+    
+  
+    <a href="../PNG/Color.html#bytesize-instance-method" class="tooltip">
+      <span>bytesize</span>
+    bytesize</a>, 
+    
+  
+    <a href="../PNG/Color.html#channels-instance-method" class="tooltip">
+      <span>channels</span>
+    channels</a>, 
+    
+  
+    <a href="../PNG/Color.html#channels%3D%28channels%3AStaticArray%28T%2CN%29%29-instance-method" class="tooltip">
+      <span>channels=(channels : StaticArray(T, N))</span>
+    channels=</a>, 
+    
+  
+    <a href="../PNG/Color.html#each%28%26%3AUInt8-%3E%29-instance-method" class="tooltip">
+      <span>each(& : UInt8 -> )</span>
+    each</a>, 
+    
+  
+    <a href="../PNG/Color.html#to_slice-instance-method" class="tooltip">
+      <span>to_slice</span>
+    to_slice</a>
+    
+  
+
+
+    
+
+  <h3>Constructor methods inherited from struct <code><a href="../PNG/Color.html">PNG::Color(T, 1)</a></code></h3>
+  
+  
+    <a href="../PNG/Color.html#new%28channels%3AStaticArray%28T%2CN%29%29-class-method" class="tooltip">
+      <span>new(channels : StaticArray(T, N))</span>
+    new</a>
+    
+  
+
+
+    
+
+
+    
+
+  <h3>Macros inherited from struct <code><a href="../PNG/Color.html">PNG::Color(T, 1)</a></code></h3>
+  
+  
+    <a href="../PNG/Color.html#%5B%5D%28%2Aargs%29-macro" class="tooltip">
+      <span>[](*args)</span>
+    []</a>, 
+    
+  
+    <a href="../PNG/Color.html#define_channels%28names%29-macro" class="tooltip">
+      <span>define_channels(names)</span>
+    define_channels</a>
+    
+  
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(g:T)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(g : T)
+
+        <a class="method-permalink" href="#new%28g%3AT%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/colors/gray.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(channels)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(channels)
+
+        <a class="method-permalink" href="#new%28channels%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/colors/gray.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="[](g:T)-class-method">
+      <div class="signature">
+        
+        def self.<strong>[]</strong>(g : T)
+
+        <a class="method-permalink" href="#%5B%5D%28g%3AT%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/colors/gray.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="color_type-class-method">
+      <div class="signature">
+        
+        def self.<strong>color_type</strong>
+
+        <a class="method-permalink" href="#color_type-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/colors/gray.cr#L3" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="g-instance-method">
+      <div class="signature">
+        
+        def <strong>g</strong>
+
+        <a class="method-permalink" href="#g-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/colors/gray.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="g=(value:T)-instance-method">
+      <div class="signature">
+        
+        def <strong>g=</strong>(value : T)
+
+        <a class="method-permalink" href="#g%3D%28value%3AT%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/colors/gray.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_rgb8-instance-method">
+      <div class="signature">
+        
+        def <strong>to_rgb8</strong>
+
+        <a class="method-permalink" href="#to_rgb8-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/colors/gray.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_s(io:IO)-instance-method">
+      <div class="signature">
+        
+        def <strong>to_s</strong>(io : IO)
+
+        <a class="method-permalink" href="#to_s%28io%3AIO%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from struct Struct
+            </div>
+          
+          <p>Same as <code>#inspect(io)</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/colors/gray.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_u16-instance-method">
+      <div class="signature">
+        
+        def <strong>to_u16</strong>
+
+        <a class="method-permalink" href="#to_u16-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/colors/gray.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_u32-instance-method">
+      <div class="signature">
+        
+        def <strong>to_u32</strong>
+
+        <a class="method-permalink" href="#to_u32-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/colors/gray.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_u8-instance-method">
+      <div class="signature">
+        
+        def <strong>to_u8</strong>
+
+        <a class="method-permalink" href="#to_u8-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/colors/gray.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+</div>
+
+</body>
+</html>

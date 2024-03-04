@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.10.1">
+<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_name" content="png">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="png">
+  <title>PNG::Canvas - png master</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          png
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="png/PNG" data-name="png">
+      <a href="../PNG.html">PNG</a>
+      
+        <ul>
+  
+  <li class=" current" data-id="png/PNG/Canvas" data-name="png::canvas">
+      <a href="../PNG/Canvas.html">Canvas</a>
+      
+    </li>
+  
+  <li class="parent " data-id="png/PNG/Chunk" data-name="png::chunk">
+      <a href="../PNG/Chunk.html">Chunk</a>
+      
+        <ul>
+  
+  <li class=" " data-id="png/PNG/Chunk/CRCMismatch" data-name="png::chunk::crcmismatch">
+      <a href="../PNG/Chunk/CRCMismatch.html">CRCMismatch</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Color" data-name="png::color(t, n)">
+      <a href="../PNG/Color.html">Color</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/ColorType" data-name="png::colortype">
+      <a href="../PNG/ColorType.html">ColorType</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/CompressionMethod" data-name="png::compressionmethod">
+      <a href="../PNG/CompressionMethod.html">CompressionMethod</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Error" data-name="png::error">
+      <a href="../PNG/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/FilterMethod" data-name="png::filtermethod">
+      <a href="../PNG/FilterMethod.html">FilterMethod</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/FilterType" data-name="png::filtertype">
+      <a href="../PNG/FilterType.html">FilterType</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Gray" data-name="png::gray(t)">
+      <a href="../PNG/Gray.html">Gray</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/GrayAlpha" data-name="png::grayalpha(t)">
+      <a href="../PNG/GrayAlpha.html">GrayAlpha</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Header" data-name="png::header">
+      <a href="../PNG/Header.html">Header</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/HSV" data-name="png::hsv">
+      <a href="../PNG/HSV.html">HSV</a>
+      
+    </li>
+  
+  <li class="parent " data-id="png/PNG/Inflater" data-name="png::inflater">
+      <a href="../PNG/Inflater.html">Inflater</a>
+      
+        <ul>
+  
+  <li class=" " data-id="png/PNG/Inflater/Error" data-name="png::inflater::error">
+      <a href="../PNG/Inflater/Error.html">Error</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Interlacing" data-name="png::interlacing">
+      <a href="../PNG/Interlacing.html">Interlacing</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Parser" data-name="png::parser">
+      <a href="../PNG/Parser.html">Parser</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/PixelSize" data-name="png::pixelsize">
+      <a href="../PNG/PixelSize.html">PixelSize</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/RGB" data-name="png::rgb(t)">
+      <a href="../PNG/RGB.html">RGB</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/RGBA" data-name="png::rgba(t)">
+      <a href="../PNG/RGBA.html">RGBA</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Scanline" data-name="png::scanline">
+      <a href="../PNG/Scanline.html">Scanline</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> PNG::<wbr>Canvas
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../PNG/Canvas.html">PNG::Canvas</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>A canvas holds all of the PNG data including the header and other chunk information</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L6" target="_blank">
+        png/canvas.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28width%3AUInt32%2Cheight%3AUInt32%2Cpalette%3ASlice%28UInt8%29%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(width : UInt32, height : UInt32, palette : Slice(UInt8) | Nil = <span class="n">nil</span>)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28header%3APNG%3A%3AHeader%2Cdata%3ABytes%7CNil%3Dnil%2Cpalette%3ASlice%28UInt8%29%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(header : PNG::Header, data : Bytes | Nil = <span class="n">nil</span>, palette : Slice(UInt8) | Nil = <span class="n">nil</span>)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%28x%3AUInt32%2Cy%3AUInt32%29-instance-method" class="signature"><strong>#[]</strong>(x : UInt32, y : UInt32)</a>
+        
+          <div class="summary"><p>Get the pixel at x, y into the canvas.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%28x%3AInt%2Cy%3AInt%29-instance-method" class="signature"><strong>#[]</strong>(x : Int, y : Int)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%3D%28x%3AUInt32%2Cy%3AUInt32%2Cvalues%3AEnumerable%28UInt8%29%29-instance-method" class="signature"><strong>#[]=</strong>(x : UInt32, y : UInt32, values : Enumerable(UInt8))</a>
+        
+          <div class="summary"><p>Set the pixel at <em>x</em>, <em>y</em> on the canvas via bytes that correspond to the color type and bit depth.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%3D%28x%3AInt%2Cy%3AInt%2Cvalues%29-instance-method" class="signature"><strong>#[]=</strong>(x : Int, y : Int, values)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bg_color%3ABytes%7CNil-instance-method" class="signature"><strong>#bg_color</strong> : Bytes | Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bg_color%3D%28bg_color%3ABytes%7CNil%29-instance-method" class="signature"><strong>#bg_color=</strong>(bg_color : Bytes | Nil)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bit_depth%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#bit_depth</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bit_depth%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#bit_depth</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bit_index%28x%3AUInt32%2Cy%3AUInt32%29-instance-method" class="signature"><strong>#bit_index</strong>(x : UInt32, y : UInt32)</a>
+        
+          <div class="summary"><p>Calculates the index into the canvas that a value would be at, accounting for padding that would exist at the end of a scanline where bit depth &lt; 8</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bits_per_pixel%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#bits_per_pixel</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bits_per_pixel%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#bits_per_pixel</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#byte_index%28x%3AUInt32%2Cy%3AUInt32%29-instance-method" class="signature"><strong>#byte_index</strong>(x : UInt32, y : UInt32)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bytes_per_pixel%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#bytes_per_pixel</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bytes_per_pixel%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#bytes_per_pixel</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bytes_per_row%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#bytes_per_row</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bytes_per_row%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#bytes_per_row</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#color%28x%2Cy%29-instance-method" class="signature"><strong>#color</strong>(x, y)</a>
+        
+          <div class="summary"><p>Get the color at x, y</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#color_type%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#color_type</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#color_type%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#color_type</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#data%3ABytes-instance-method" class="signature"><strong>#data</strong> : Bytes</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#data%3D%28data%3ABytes%29-instance-method" class="signature"><strong>#data=</strong>(data : Bytes)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#gama%3AUInt32%7CNil-instance-method" class="signature"><strong>#gama</strong> : UInt32 | Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#gama%3D%28gama%3AUInt32%7CNil%29-instance-method" class="signature"><strong>#gama=</strong>(gama : UInt32 | Nil)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#header%3AHeader-instance-method" class="signature"><strong>#header</strong> : Header</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#header%3D%28header%3AHeader%29-instance-method" class="signature"><strong>#header=</strong>(header : Header)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#height%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#height</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#height%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#height</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#interlaced%3F%3ABool-instance-method" class="signature"><strong>#interlaced?</strong> : Bool</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#last_modified%3ATime%7CNil-instance-method" class="signature"><strong>#last_modified</strong> : Time | Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#last_modified%3D%28last_modified%3ATime%7CNil%29-instance-method" class="signature"><strong>#last_modified=</strong>(last_modified : Time | Nil)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#palette%3ABytes%7CNil-instance-method" class="signature"><strong>#palette</strong> : Bytes | Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#palette%3D%28palette%3ABytes%7CNil%29-instance-method" class="signature"><strong>#palette=</strong>(palette : Bytes | Nil)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#pixel_size%3APixelSize%7CNil-instance-method" class="signature"><strong>#pixel_size</strong> : PixelSize | Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#pixel_size%3D%28pixel_size%3APixelSize%7CNil%29-instance-method" class="signature"><strong>#pixel_size=</strong>(pixel_size : PixelSize | Nil)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#set_color%28x%2Cy%2Ccolor%29-instance-method" class="signature"><strong>#set_color</strong>(x, y, color)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#width%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#width</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#width%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#width</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(width:UInt32,height:UInt32,palette:Slice(UInt8)|Nil=nil)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(width : UInt32, height : UInt32, palette : Slice(UInt8) | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#new%28width%3AUInt32%2Cheight%3AUInt32%2Cpalette%3ASlice%28UInt8%29%7CNil%3Dnil%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L20" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(header:PNG::Header,data:Bytes|Nil=nil,palette:Slice(UInt8)|Nil=nil)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(header : <a href="../PNG/Header.html">PNG::Header</a>, data : Bytes | Nil = <span class="n">nil</span>, palette : Slice(UInt8) | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#new%28header%3APNG%3A%3AHeader%2Cdata%3ABytes%7CNil%3Dnil%2Cpalette%3ASlice%28UInt8%29%7CNil%3Dnil%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L29" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="[](x:UInt32,y:UInt32)-instance-method">
+      <div class="signature">
+        
+        def <strong>[]</strong>(x : UInt32, y : UInt32)
+
+        <a class="method-permalink" href="#%5B%5D%28x%3AUInt32%2Cy%3AUInt32%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Get the pixel at x, y into the canvas.
+This returns the Bytes that represent the pixel.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L90" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[](x:Int,y:Int)-instance-method">
+      <div class="signature">
+        
+        def <strong>[]</strong>(x : Int, y : Int)
+
+        <a class="method-permalink" href="#%5B%5D%28x%3AInt%2Cy%3AInt%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L110" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]=(x:UInt32,y:UInt32,values:Enumerable(UInt8))-instance-method">
+      <div class="signature">
+        
+        def <strong>[]=</strong>(x : UInt32, y : UInt32, values : Enumerable(UInt8))
+
+        <a class="method-permalink" href="#%5B%5D%3D%28x%3AUInt32%2Cy%3AUInt32%2Cvalues%3AEnumerable%28UInt8%29%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Set the pixel at <em>x</em>, <em>y</em> on the canvas via bytes that correspond to the
+color type and bit depth.</p>
+<p>For example, an image with 8bits per channel in RGB (<code><a href="../PNG/ColorType.html#TrueColor">PNG::ColorType::TrueColor</a></code>)
+would be set with 3 bytes: <code>canvas[0, 0] = Bytes[255, 0, 255]</code></p>
+<p>A canvas with 16bits in RGB would accept 6 bytes, (2 bytes per channel):
+<code>canvas[0, 0] = Bytes[255, 255, 0, 0, 255, 255]</code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L60" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]=(x:Int,y:Int,values)-instance-method">
+      <div class="signature">
+        
+        def <strong>[]=</strong>(x : Int, y : Int, values)
+
+        <a class="method-permalink" href="#%5B%5D%3D%28x%3AInt%2Cy%3AInt%2Cvalues%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L84" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bg_color:Bytes|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>bg_color</strong> : Bytes | Nil
+
+        <a class="method-permalink" href="#bg_color%3ABytes%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bg_color=(bg_color:Bytes|Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>bg_color=</strong>(bg_color : Bytes | Nil)
+
+        <a class="method-permalink" href="#bg_color%3D%28bg_color%3ABytes%7CNil%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bit_depth(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>bit_depth</strong>(*args, **options)
+
+        <a class="method-permalink" href="#bit_depth%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bit_depth(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>bit_depth</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#bit_depth%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bit_index(x:UInt32,y:UInt32)-instance-method">
+      <div class="signature">
+        
+        def <strong>bit_index</strong>(x : UInt32, y : UInt32)
+
+        <a class="method-permalink" href="#bit_index%28x%3AUInt32%2Cy%3AUInt32%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Calculates the index into the canvas that a value would be at, accounting
+for padding that would exist at the end of a scanline where bit depth &lt; 8</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L43" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bits_per_pixel(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>bits_per_pixel</strong>(*args, **options)
+
+        <a class="method-permalink" href="#bits_per_pixel%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bits_per_pixel(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>bits_per_pixel</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#bits_per_pixel%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="byte_index(x:UInt32,y:UInt32)-instance-method">
+      <div class="signature">
+        
+        def <strong>byte_index</strong>(x : UInt32, y : UInt32)
+
+        <a class="method-permalink" href="#byte_index%28x%3AUInt32%2Cy%3AUInt32%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L47" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bytes_per_pixel(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>bytes_per_pixel</strong>(*args, **options)
+
+        <a class="method-permalink" href="#bytes_per_pixel%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bytes_per_pixel(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>bytes_per_pixel</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#bytes_per_pixel%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bytes_per_row(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>bytes_per_row</strong>(*args, **options)
+
+        <a class="method-permalink" href="#bytes_per_row%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bytes_per_row(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>bytes_per_row</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#bytes_per_row%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="color(x,y)-instance-method">
+      <div class="signature">
+        
+        def <strong>color</strong>(x, y)
+
+        <a class="method-permalink" href="#color%28x%2Cy%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Get the color at x, y</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L115" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="color_type(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>color_type</strong>(*args, **options)
+
+        <a class="method-permalink" href="#color_type%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="color_type(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>color_type</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#color_type%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="data:Bytes-instance-method">
+      <div class="signature">
+        
+        def <strong>data</strong> : Bytes
+
+        <a class="method-permalink" href="#data%3ABytes-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L8" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="data=(data:Bytes)-instance-method">
+      <div class="signature">
+        
+        def <strong>data=</strong>(data : Bytes)
+
+        <a class="method-permalink" href="#data%3D%28data%3ABytes%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L8" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="gama:UInt32|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>gama</strong> : UInt32 | Nil
+
+        <a class="method-permalink" href="#gama%3AUInt32%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="gama=(gama:UInt32|Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>gama=</strong>(gama : UInt32 | Nil)
+
+        <a class="method-permalink" href="#gama%3D%28gama%3AUInt32%7CNil%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="header:Header-instance-method">
+      <div class="signature">
+        
+        def <strong>header</strong> : <a href="../PNG/Header.html">Header</a>
+
+        <a class="method-permalink" href="#header%3AHeader-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="header=(header:Header)-instance-method">
+      <div class="signature">
+        
+        def <strong>header=</strong>(header : <a href="../PNG/Header.html">Header</a>)
+
+        <a class="method-permalink" href="#header%3D%28header%3AHeader%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="height(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>height</strong>(*args, **options)
+
+        <a class="method-permalink" href="#height%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="height(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>height</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#height%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="interlaced?:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>interlaced?</strong> : Bool
+
+        <a class="method-permalink" href="#interlaced%3F%3ABool-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L37" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="last_modified:Time|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>last_modified</strong> : Time | Nil
+
+        <a class="method-permalink" href="#last_modified%3ATime%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L12" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="last_modified=(last_modified:Time|Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>last_modified=</strong>(last_modified : Time | Nil)
+
+        <a class="method-permalink" href="#last_modified%3D%28last_modified%3ATime%7CNil%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L12" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="palette:Bytes|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>palette</strong> : Bytes | Nil
+
+        <a class="method-permalink" href="#palette%3ABytes%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="palette=(palette:Bytes|Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>palette=</strong>(palette : Bytes | Nil)
+
+        <a class="method-permalink" href="#palette%3D%28palette%3ABytes%7CNil%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="pixel_size:PixelSize|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>pixel_size</strong> : <a href="../PNG/PixelSize.html">PixelSize</a> | Nil
+
+        <a class="method-permalink" href="#pixel_size%3APixelSize%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="pixel_size=(pixel_size:PixelSize|Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>pixel_size=</strong>(pixel_size : <a href="../PNG/PixelSize.html">PixelSize</a> | Nil)
+
+        <a class="method-permalink" href="#pixel_size%3D%28pixel_size%3APixelSize%7CNil%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="set_color(x,y,color)-instance-method">
+      <div class="signature">
+        
+        def <strong>set_color</strong>(x, y, color)
+
+        <a class="method-permalink" href="#set_color%28x%2Cy%2Ccolor%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L119" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="width(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>width</strong>(*args, **options)
+
+        <a class="method-permalink" href="#width%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="width(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>width</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#width%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L15" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+</div>
+
+</body>
+</html>

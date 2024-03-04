@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.10.1">
+<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_name" content="png">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="png">
+  <title>PNG::Scanline - png master</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          png
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="png/PNG" data-name="png">
+      <a href="../PNG.html">PNG</a>
+      
+        <ul>
+  
+  <li class=" " data-id="png/PNG/Canvas" data-name="png::canvas">
+      <a href="../PNG/Canvas.html">Canvas</a>
+      
+    </li>
+  
+  <li class="parent " data-id="png/PNG/Chunk" data-name="png::chunk">
+      <a href="../PNG/Chunk.html">Chunk</a>
+      
+        <ul>
+  
+  <li class=" " data-id="png/PNG/Chunk/CRCMismatch" data-name="png::chunk::crcmismatch">
+      <a href="../PNG/Chunk/CRCMismatch.html">CRCMismatch</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Color" data-name="png::color(t, n)">
+      <a href="../PNG/Color.html">Color</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/ColorType" data-name="png::colortype">
+      <a href="../PNG/ColorType.html">ColorType</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/CompressionMethod" data-name="png::compressionmethod">
+      <a href="../PNG/CompressionMethod.html">CompressionMethod</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Error" data-name="png::error">
+      <a href="../PNG/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/FilterMethod" data-name="png::filtermethod">
+      <a href="../PNG/FilterMethod.html">FilterMethod</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/FilterType" data-name="png::filtertype">
+      <a href="../PNG/FilterType.html">FilterType</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Gray" data-name="png::gray(t)">
+      <a href="../PNG/Gray.html">Gray</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/GrayAlpha" data-name="png::grayalpha(t)">
+      <a href="../PNG/GrayAlpha.html">GrayAlpha</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Header" data-name="png::header">
+      <a href="../PNG/Header.html">Header</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/HSV" data-name="png::hsv">
+      <a href="../PNG/HSV.html">HSV</a>
+      
+    </li>
+  
+  <li class="parent " data-id="png/PNG/Inflater" data-name="png::inflater">
+      <a href="../PNG/Inflater.html">Inflater</a>
+      
+        <ul>
+  
+  <li class=" " data-id="png/PNG/Inflater/Error" data-name="png::inflater::error">
+      <a href="../PNG/Inflater/Error.html">Error</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Interlacing" data-name="png::interlacing">
+      <a href="../PNG/Interlacing.html">Interlacing</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Parser" data-name="png::parser">
+      <a href="../PNG/Parser.html">Parser</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/PixelSize" data-name="png::pixelsize">
+      <a href="../PNG/PixelSize.html">PixelSize</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/RGB" data-name="png::rgb(t)">
+      <a href="../PNG/RGB.html">RGB</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/RGBA" data-name="png::rgba(t)">
+      <a href="../PNG/RGBA.html">RGBA</a>
+      
+    </li>
+  
+  <li class=" current" data-id="png/PNG/Scanline" data-name="png::scanline">
+      <a href="../PNG/Scanline.html">Scanline</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">struct</span> PNG::<wbr>Scanline
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../PNG/Scanline.html">PNG::Scanline</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>A row of pixels including their filtering method</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L5" target="_blank">
+        png/scanline.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28header%3APNG%3A%3AHeader%2Cfilter%3APNG%3A%3AFilterMethod%2Cdata%3ASlice%28UInt8%29%29-class-method" class="signature"><strong>.new</strong>(header : PNG::Header, filter : PNG::FilterMethod, data : Slice(UInt8))</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#[]</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#[]</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#[]?</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%5B%5D%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#[]?</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#average%28other%3AScanline%2C%26block%3AUInt8-%3ENil%29-instance-method" class="signature"><strong>#average</strong>(other : Scanline, &block : UInt8 -> Nil)</a>
+        
+          <div class="summary"><p>Filt(x) = Orig(x) - floor((Orig(a) + Orig(b)) / 2)</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#average%28other%3ANil%2C%26block%3AUInt8-%3ENil%29-instance-method" class="signature"><strong>#average</strong>(other : Nil, &block : UInt8 -> Nil)</a>
+        
+          <div class="summary"><p>Filt(x) = Orig(x) - floor((Orig(a) + Orig(b)) / 2)</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#average%28other%3AScanline%7CNil%2Cio%3AIO%29-instance-method" class="signature"><strong>#average</strong>(other : Scanline | Nil, io : IO)</a>
+        
+          <div class="summary"><p>Filt(x) = Orig(x) - floor((Orig(a) + Orig(b)) / 2)</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bit_depth%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#bit_depth</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bit_depth%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#bit_depth</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bit_index%28x%3AUInt32%2Cy%3AUInt32%29-instance-method" class="signature"><strong>#bit_index</strong>(x : UInt32, y : UInt32)</a>
+        
+          <div class="summary"><p>Calculates the index into the canvas that a value would be at, accounting for padding that would exist at the end of a scanline where bit depth &lt; 8</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bits_per_pixel%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#bits_per_pixel</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bits_per_pixel%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#bits_per_pixel</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bytes_per_pixel%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#bytes_per_pixel</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#bytes_per_pixel%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#bytes_per_pixel</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#channels%28%2Aargs%2C%2A%2Aoptions%29-instance-method" class="signature"><strong>#channels</strong>(*args, **options)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#channels%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method" class="signature"><strong>#channels</strong>(*args, **options, &)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#data%3ABytes-instance-method" class="signature"><strong>#data</strong> : Bytes</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#data%3D%28data%3ABytes%29-instance-method" class="signature"><strong>#data=</strong>(data : Bytes)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#filter%3AFilterMethod-instance-method" class="signature"><strong>#filter</strong> : FilterMethod</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#filter%28previous%3AScanline%7CNil%2C%26block%3AUInt8-%3ENil%29-instance-method" class="signature"><strong>#filter</strong>(previous : Scanline | Nil, &block : UInt8 -> Nil)</a>
+        
+          <div class="summary"><p>Apply a filter</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#filter%3D%28filter%3AFilterMethod%29-instance-method" class="signature"><strong>#filter=</strong>(filter : FilterMethod)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#header%3AHeader-instance-method" class="signature"><strong>#header</strong> : Header</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#header%3D%28header%3AHeader%29-instance-method" class="signature"><strong>#header=</strong>(header : Header)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#none%28%26%29-instance-method" class="signature"><strong>#none</strong>(&)</a>
+        
+          <div class="summary"><pre><code class="language-crystal"></code></pre></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#paeth%28other%3AScanline%2C%26block%3AUInt8-%3ENil%29-instance-method" class="signature"><strong>#paeth</strong>(other : Scanline, &block : UInt8 -> Nil)</a>
+        
+          <div class="summary"><p>Filt(x) = Orig(x) - PaethPredictor(Orig(a), Orig(b), Orig(c))</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#paeth%28other%3ANil%2C%26block%3AUInt8-%3ENil%29-instance-method" class="signature"><strong>#paeth</strong>(other : Nil, &block : UInt8 -> Nil)</a>
+        
+          <div class="summary"><p>Filt(x) = Orig(x) - PaethPredictor(Orig(a), Orig(b), Orig(c))</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#paeth%28other%3AScanline%7CNil%2Cio%3AIO%29-instance-method" class="signature"><strong>#paeth</strong>(other : Scanline | Nil, io : IO)</a>
+        
+          <div class="summary"><p>Filt(x) = Orig(x) - PaethPredictor(Orig(a), Orig(b), Orig(c))</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#paeth_predict%28a%2Cb%2Cc%29-instance-method" class="signature"><strong>#paeth_predict</strong>(a, b, c)</a>
+        
+          <div class="summary"><p>https://www.w3.org/TR/png-3/#bib-paeth</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#pixel%28x%3AInt%29%3ABytes-instance-method" class="signature"><strong>#pixel</strong>(x : Int) : Bytes</a>
+        
+          <div class="summary"><p>Return the bytes that represent a pixel at x in this scanline</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#set_pixel%28x%3AInt%2Cvalues%3ABytes%29%3ANil-instance-method" class="signature"><strong>#set_pixel</strong>(x : Int, values : Bytes) : Nil</a>
+        
+          <div class="summary"><p>Sets a pixel in this scanline based on the header</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sub%28%26block%3AUInt8-%3ENil%29-instance-method" class="signature"><strong>#sub</strong>(&block : UInt8 -> Nil)</a>
+        
+          <div class="summary"><p>Filt(x) = Orig(x) - Orig(a) Run the sub filter strategy yielding each modified byte to the block</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#sub%28io%3AIO%29-instance-method" class="signature"><strong>#sub</strong>(io : IO)</a>
+        
+          <div class="summary"><p>Filt(x) = Orig(x) - Orig(a) Run the sub filter strategy yielding each modified byte to the block</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unaverage%28other%3AScanline%29-instance-method" class="signature"><strong>#unaverage</strong>(other : Scanline)</a>
+        
+          <div class="summary"><p>Removes the type 3 Average filter via: <code>Recon(x) = Filt(x) + floor((Recon(a) + Recon(b)) / 2)</code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unaverage%28other%3ANil%29-instance-method" class="signature"><strong>#unaverage</strong>(other : Nil)</a>
+        
+          <div class="summary"><p>Removes the type 3 Average filter via: <code>Recon(x) = Filt(x) + floor((Recon(a) + Recon(b)) / 2)</code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unfilter%28previous%3AScanline%7CNil%29-instance-method" class="signature"><strong>#unfilter</strong>(previous : Scanline | Nil)</a>
+        
+          <div class="summary"><p>Remove any filtering in this scanline @see https://www.w3.org/TR/png-3/#9Filters</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unpaeth%28other%3AScanline%29-instance-method" class="signature"><strong>#unpaeth</strong>(other : Scanline)</a>
+        
+          <div class="summary"><p>Remove the Paeth filter type <code>Recon(x) = Filt(x) + PaethPredictor(Recon(a), Recon(b), Recon(c))</code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unpaeth%28other%3ANil%29-instance-method" class="signature"><strong>#unpaeth</strong>(other : Nil)</a>
+        
+          <div class="summary"><p>Remove the Paeth filter type <code>Recon(x) = Filt(x) + PaethPredictor(Recon(a), Recon(b), Recon(c))</code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unsub-instance-method" class="signature"><strong>#unsub</strong></a>
+        
+          <div class="summary"><p>Remove the sub filter Recon(x) = Filt(x) + Recon(a)</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unup%28other%3AScanline%7CNil%29-instance-method" class="signature"><strong>#unup</strong>(other : Scanline | Nil)</a>
+        
+          <div class="summary"><p>Remove the up filter</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#up%28other%3AScanline%2C%26block%3AUInt8-%3ENil%29-instance-method" class="signature"><strong>#up</strong>(other : Scanline, &block : UInt8 -> Nil)</a>
+        
+          <div class="summary"><p>Filt(x) = Orig(x) - Orig(b)</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#up%28other%3ANil%2C%26block%3AUInt8-%3ENil%29-instance-method" class="signature"><strong>#up</strong>(other : Nil, &block : UInt8 -> Nil)</a>
+        
+          <div class="summary"><p>Filt(x) = Orig(x) - Orig(b)</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#up%28other%3AScanline%7CNil%2Cio%3AIO%29-instance-method" class="signature"><strong>#up</strong>(other : Scanline | Nil, io : IO)</a>
+        
+          <div class="summary"><p>Filt(x) = Orig(x) - Orig(b)</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(header:PNG::Header,filter:PNG::FilterMethod,data:Slice(UInt8))-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(header : <a href="../PNG/Header.html">PNG::Header</a>, filter : <a href="../PNG/FilterMethod.html">PNG::FilterMethod</a>, data : Slice(UInt8))
+
+        <a class="method-permalink" href="#new%28header%3APNG%3A%3AHeader%2Cfilter%3APNG%3A%3AFilterMethod%2Cdata%3ASlice%28UInt8%29%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="[](*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>[]</strong>(*args, **options)
+
+        <a class="method-permalink" href="#%5B%5D%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[](*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>[]</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#%5B%5D%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]?(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>[]?</strong>(*args, **options)
+
+        <a class="method-permalink" href="#%5B%5D%3F%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="[]?(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>[]?</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#%5B%5D%3F%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="average(other:Scanline,&amp;block:UInt8-&gt;Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>average</strong>(other : <a href="../PNG/Scanline.html">Scanline</a>, &block : UInt8 -> Nil)
+
+        <a class="method-permalink" href="#average%28other%3AScanline%2C%26block%3AUInt8-%3ENil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Filt(x) = Orig(x) - floor((Orig(a) + Orig(b)) / 2)</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L176" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="average(other:Nil,&amp;block:UInt8-&gt;Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>average</strong>(other : Nil, &block : UInt8 -> Nil)
+
+        <a class="method-permalink" href="#average%28other%3ANil%2C%26block%3AUInt8-%3ENil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Filt(x) = Orig(x) - floor((Orig(a) + Orig(b)) / 2)</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L187" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="average(other:Scanline|Nil,io:IO)-instance-method">
+      <div class="signature">
+        
+        def <strong>average</strong>(other : <a href="../PNG/Scanline.html">Scanline</a> | Nil, io : IO)
+
+        <a class="method-permalink" href="#average%28other%3AScanline%7CNil%2Cio%3AIO%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Filt(x) = Orig(x) - floor((Orig(a) + Orig(b)) / 2)</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L197" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bit_depth(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>bit_depth</strong>(*args, **options)
+
+        <a class="method-permalink" href="#bit_depth%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bit_depth(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>bit_depth</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#bit_depth%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bit_index(x:UInt32,y:UInt32)-instance-method">
+      <div class="signature">
+        
+        def <strong>bit_index</strong>(x : UInt32, y : UInt32)
+
+        <a class="method-permalink" href="#bit_index%28x%3AUInt32%2Cy%3AUInt32%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Calculates the index into the canvas that a value would be at, accounting
+for padding that would exist at the end of a scanline where bit depth &lt; 8</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L18" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bits_per_pixel(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>bits_per_pixel</strong>(*args, **options)
+
+        <a class="method-permalink" href="#bits_per_pixel%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bits_per_pixel(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>bits_per_pixel</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#bits_per_pixel%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bytes_per_pixel(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>bytes_per_pixel</strong>(*args, **options)
+
+        <a class="method-permalink" href="#bytes_per_pixel%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="bytes_per_pixel(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>bytes_per_pixel</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#bytes_per_pixel%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="channels(*args,**options)-instance-method">
+      <div class="signature">
+        
+        def <strong>channels</strong>(*args, **options)
+
+        <a class="method-permalink" href="#channels%28%2Aargs%2C%2A%2Aoptions%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="channels(*args,**options,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>channels</strong>(*args, **options, &)
+
+        <a class="method-permalink" href="#channels%28%2Aargs%2C%2A%2Aoptions%2C%26%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="data:Bytes-instance-method">
+      <div class="signature">
+        
+        def <strong>data</strong> : Bytes
+
+        <a class="method-permalink" href="#data%3ABytes-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L8" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="data=(data:Bytes)-instance-method">
+      <div class="signature">
+        
+        def <strong>data=</strong>(data : Bytes)
+
+        <a class="method-permalink" href="#data%3D%28data%3ABytes%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L8" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="filter:FilterMethod-instance-method">
+      <div class="signature">
+        
+        def <strong>filter</strong> : <a href="../PNG/FilterMethod.html">FilterMethod</a>
+
+        <a class="method-permalink" href="#filter%3AFilterMethod-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="filter(previous:Scanline|Nil,&amp;block:UInt8-&gt;Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>filter</strong>(previous : <a href="../PNG/Scanline.html">Scanline</a> | Nil, &block : UInt8 -> Nil)
+
+        <a class="method-permalink" href="#filter%28previous%3AScanline%7CNil%2C%26block%3AUInt8-%3ENil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Apply a filter</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L77" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="filter=(filter:FilterMethod)-instance-method">
+      <div class="signature">
+        
+        def <strong>filter=</strong>(filter : <a href="../PNG/FilterMethod.html">FilterMethod</a>)
+
+        <a class="method-permalink" href="#filter%3D%28filter%3AFilterMethod%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="header:Header-instance-method">
+      <div class="signature">
+        
+        def <strong>header</strong> : <a href="../PNG/Header.html">Header</a>
+
+        <a class="method-permalink" href="#header%3AHeader-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L6" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="header=(header:Header)-instance-method">
+      <div class="signature">
+        
+        def <strong>header=</strong>(header : <a href="../PNG/Header.html">Header</a>)
+
+        <a class="method-permalink" href="#header%3D%28header%3AHeader%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L6" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="none(&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>none</strong>(&)
+
+        <a class="method-permalink" href="#none%28%26%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <pre><code class="language-crystal"></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L89" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="paeth(other:Scanline,&amp;block:UInt8-&gt;Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>paeth</strong>(other : <a href="../PNG/Scanline.html">Scanline</a>, &block : UInt8 -> Nil)
+
+        <a class="method-permalink" href="#paeth%28other%3AScanline%2C%26block%3AUInt8-%3ENil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Filt(x) = Orig(x) - PaethPredictor(Orig(a), Orig(b), Orig(c))</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L231" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="paeth(other:Nil,&amp;block:UInt8-&gt;Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>paeth</strong>(other : Nil, &block : UInt8 -> Nil)
+
+        <a class="method-permalink" href="#paeth%28other%3ANil%2C%26block%3AUInt8-%3ENil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Filt(x) = Orig(x) - PaethPredictor(Orig(a), Orig(b), Orig(c))</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L244" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="paeth(other:Scanline|Nil,io:IO)-instance-method">
+      <div class="signature">
+        
+        def <strong>paeth</strong>(other : <a href="../PNG/Scanline.html">Scanline</a> | Nil, io : IO)
+
+        <a class="method-permalink" href="#paeth%28other%3AScanline%7CNil%2Cio%3AIO%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Filt(x) = Orig(x) - PaethPredictor(Orig(a), Orig(b), Orig(c))</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L257" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="paeth_predict(a,b,c)-instance-method">
+      <div class="signature">
+        
+        def <strong>paeth_predict</strong>(a, b, c)
+
+        <a class="method-permalink" href="#paeth_predict%28a%2Cb%2Cc%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>https://www.w3.org/TR/png-3/#bib-paeth</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L265" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="pixel(x:Int):Bytes-instance-method">
+      <div class="signature">
+        
+        def <strong>pixel</strong>(x : Int) : Bytes
+
+        <a class="method-permalink" href="#pixel%28x%3AInt%29%3ABytes-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Return the bytes that represent a pixel at x in this scanline</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L43" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="set_pixel(x:Int,values:Bytes):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>set_pixel</strong>(x : Int, values : Bytes) : Nil
+
+        <a class="method-permalink" href="#set_pixel%28x%3AInt%2Cvalues%3ABytes%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Sets a pixel in this scanline based on the header</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L24" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sub(&amp;block:UInt8-&gt;Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>sub</strong>(&block : UInt8 -> Nil)
+
+        <a class="method-permalink" href="#sub%28%26block%3AUInt8-%3ENil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Filt(x) = Orig(x) - Orig(a)
+Run the sub filter strategy yielding each modified byte to the block</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L108" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="sub(io:IO)-instance-method">
+      <div class="signature">
+        
+        def <strong>sub</strong>(io : IO)
+
+        <a class="method-permalink" href="#sub%28io%3AIO%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Filt(x) = Orig(x) - Orig(a)
+Run the sub filter strategy yielding each modified byte to the block</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L119" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unaverage(other:Scanline)-instance-method">
+      <div class="signature">
+        
+        def <strong>unaverage</strong>(other : <a href="../PNG/Scanline.html">Scanline</a>)
+
+        <a class="method-permalink" href="#unaverage%28other%3AScanline%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Removes the type 3 Average filter via:
+<code>Recon(x) = Filt(x) + floor((Recon(a) + Recon(b)) / 2)</code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L155" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unaverage(other:Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>unaverage</strong>(other : Nil)
+
+        <a class="method-permalink" href="#unaverage%28other%3ANil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Removes the type 3 Average filter via:
+<code>Recon(x) = Filt(x) + floor((Recon(a) + Recon(b)) / 2)</code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L166" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unfilter(previous:Scanline|Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>unfilter</strong>(previous : <a href="../PNG/Scanline.html">Scanline</a> | Nil)
+
+        <a class="method-permalink" href="#unfilter%28previous%3AScanline%7CNil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Remove any filtering in this scanline
+@see https://www.w3.org/TR/png-3/#9Filters</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L65" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unpaeth(other:Scanline)-instance-method">
+      <div class="signature">
+        
+        def <strong>unpaeth</strong>(other : <a href="../PNG/Scanline.html">Scanline</a>)
+
+        <a class="method-permalink" href="#unpaeth%28other%3AScanline%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Remove the Paeth filter type
+<code>Recon(x) = Filt(x) + PaethPredictor(Recon(a), Recon(b), Recon(c))</code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L205" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unpaeth(other:Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>unpaeth</strong>(other : Nil)
+
+        <a class="method-permalink" href="#unpaeth%28other%3ANil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Remove the Paeth filter type
+<code>Recon(x) = Filt(x) + PaethPredictor(Recon(a), Recon(b), Recon(c))</code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L218" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unsub-instance-method">
+      <div class="signature">
+        
+        def <strong>unsub</strong>
+
+        <a class="method-permalink" href="#unsub-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Remove the sub filter
+Recon(x) = Filt(x) + Recon(a)</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L97" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unup(other:Scanline|Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>unup</strong>(other : <a href="../PNG/Scanline.html">Scanline</a> | Nil)
+
+        <a class="method-permalink" href="#unup%28other%3AScanline%7CNil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Remove the up filter</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L126" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="up(other:Scanline,&amp;block:UInt8-&gt;Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>up</strong>(other : <a href="../PNG/Scanline.html">Scanline</a>, &block : UInt8 -> Nil)
+
+        <a class="method-permalink" href="#up%28other%3AScanline%2C%26block%3AUInt8-%3ENil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Filt(x) = Orig(x) - Orig(b)</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L135" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="up(other:Nil,&amp;block:UInt8-&gt;Nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>up</strong>(other : Nil, &block : UInt8 -> Nil)
+
+        <a class="method-permalink" href="#up%28other%3ANil%2C%26block%3AUInt8-%3ENil%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Filt(x) = Orig(x) - Orig(b)</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L142" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="up(other:Scanline|Nil,io:IO)-instance-method">
+      <div class="signature">
+        
+        def <strong>up</strong>(other : <a href="../PNG/Scanline.html">Scanline</a> | Nil, io : IO)
+
+        <a class="method-permalink" href="#up%28other%3AScanline%7CNil%2Cio%3AIO%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Filt(x) = Orig(x) - Orig(b)</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L147" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+</div>
+
+</body>
+</html>

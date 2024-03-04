@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.10.1">
+<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_name" content="png">
+
+
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/doc.js"></script>
+
+  <meta name="repository-name" content="png">
+  <title>PNG - png master</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="index.html">
+          png
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="png/PNG" data-name="png">
+      <a href="PNG.html">PNG</a>
+      
+        <ul>
+  
+  <li class=" " data-id="png/PNG/Canvas" data-name="png::canvas">
+      <a href="PNG/Canvas.html">Canvas</a>
+      
+    </li>
+  
+  <li class="parent " data-id="png/PNG/Chunk" data-name="png::chunk">
+      <a href="PNG/Chunk.html">Chunk</a>
+      
+        <ul>
+  
+  <li class=" " data-id="png/PNG/Chunk/CRCMismatch" data-name="png::chunk::crcmismatch">
+      <a href="PNG/Chunk/CRCMismatch.html">CRCMismatch</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Color" data-name="png::color(t, n)">
+      <a href="PNG/Color.html">Color</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/ColorType" data-name="png::colortype">
+      <a href="PNG/ColorType.html">ColorType</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/CompressionMethod" data-name="png::compressionmethod">
+      <a href="PNG/CompressionMethod.html">CompressionMethod</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Error" data-name="png::error">
+      <a href="PNG/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/FilterMethod" data-name="png::filtermethod">
+      <a href="PNG/FilterMethod.html">FilterMethod</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/FilterType" data-name="png::filtertype">
+      <a href="PNG/FilterType.html">FilterType</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Gray" data-name="png::gray(t)">
+      <a href="PNG/Gray.html">Gray</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/GrayAlpha" data-name="png::grayalpha(t)">
+      <a href="PNG/GrayAlpha.html">GrayAlpha</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Header" data-name="png::header">
+      <a href="PNG/Header.html">Header</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/HSV" data-name="png::hsv">
+      <a href="PNG/HSV.html">HSV</a>
+      
+    </li>
+  
+  <li class="parent " data-id="png/PNG/Inflater" data-name="png::inflater">
+      <a href="PNG/Inflater.html">Inflater</a>
+      
+        <ul>
+  
+  <li class=" " data-id="png/PNG/Inflater/Error" data-name="png::inflater::error">
+      <a href="PNG/Inflater/Error.html">Error</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Interlacing" data-name="png::interlacing">
+      <a href="PNG/Interlacing.html">Interlacing</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Parser" data-name="png::parser">
+      <a href="PNG/Parser.html">Parser</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/PixelSize" data-name="png::pixelsize">
+      <a href="PNG/PixelSize.html">PixelSize</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/RGB" data-name="png::rgb(t)">
+      <a href="PNG/RGB.html">RGB</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/RGBA" data-name="png::rgba(t)">
+      <a href="PNG/RGBA.html">RGBA</a>
+      
+    </li>
+  
+  <li class=" " data-id="png/PNG/Scanline" data-name="png::scanline">
+      <a href="PNG/Scanline.html">Scanline</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">module</span> PNG
+
+</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png.cr#L11" target="_blank">
+        png.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/canvas.cr#L3" target="_blank">
+        png/canvas.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/chunk.cr#L4" target="_blank">
+        png/chunk.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/colors.cr#L1" target="_blank">
+        png/colors.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/colors/gray.cr#L1" target="_blank">
+        png/colors/gray.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/colors/gray_alpha.cr#L1" target="_blank">
+        png/colors/gray_alpha.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/colors/hsv.cr#L1" target="_blank">
+        png/colors/hsv.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/colors/rgb.cr#L1" target="_blank">
+        png/colors/rgb.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/colors/rgba.cr#L1" target="_blank">
+        png/colors/rgba.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/enums/color_type.cr#L1" target="_blank">
+        png/enums/color_type.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/enums/compression_method.cr#L1" target="_blank">
+        png/enums/compression_method.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/enums/filter_method.cr#L1" target="_blank">
+        png/enums/filter_method.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/enums/filter_type.cr#L1" target="_blank">
+        png/enums/filter_type.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/enums/interlacing.cr#L1" target="_blank">
+        png/enums/interlacing.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/error.cr#L1" target="_blank">
+        png/error.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/header.cr#L4" target="_blank">
+        png/header.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/inflater.cr#L5" target="_blank">
+        png/inflater.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/parser.cr#L1" target="_blank">
+        png/parser.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/pixel_size.cr#L1" target="_blank">
+        png/pixel_size.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png/scanline.cr#L3" target="_blank">
+        png/scanline.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+  
+    <h2>
+      <a id="constant-summary" class="anchor" href="#constant-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Constant Summary
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="MAGIC">
+        <strong>MAGIC</strong> = <code><span class="t">Bytes</span>[<span class="n">137</span>, <span class="n">80</span>, <span class="n">78</span>, <span class="n">71</span>, <span class="n">13</span>, <span class="n">10</span>, <span class="n">26</span>, <span class="n">10</span>]</code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>MAGIC is the first 8 bytes of a PNG file: &quot;\x89PNG\r\n\x1a\n&quot;</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="VERSION">
+        <strong>VERSION</strong> = <code><span class="o">{{</span> (<span class="s">`shards version`</span>).stringify.chomp }}</code>
+      </dt>
+      
+    
+  </dl>
+
+
+
+
+
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#read%28path%3AString%29%3ACanvas-class-method" class="signature"><strong>.read</strong>(path : String) : Canvas</a>
+        
+          <div class="summary"><p>Reads a png stream returns a <em>PNG::Canvas</em></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#read%28io%3AIO%29%3ACanvas-class-method" class="signature"><strong>.read</strong>(io : IO) : Canvas</a>
+        
+          <div class="summary"><p>Reads a png stream returns a <em>PNG::Canvas</em></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#write%28path%3AString%2Ccanvas%3ACanvas%29-class-method" class="signature"><strong>.write</strong>(path : String, canvas : Canvas)</a>
+        
+          <div class="summary"><p>Write a <em>canvas</em> to a .png file given a <em>path</em></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#write%28io%3AIO%2Ccanvas%3ACanvas%29-class-method" class="signature"><strong>.write</strong>(io : IO, canvas : Canvas)</a>
+        
+          <div class="summary"><p>Write a <em>canvas</em> to a given <em>io</em> in png format.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>
+    <a id="macro-summary" class="anchor" href="#macro-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Macro Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#debug%28args%29-macro" class="signature"><strong>debug</strong>(args)</a>
+        
+          <div class="summary"><p>Only logs messages if built with <code>-Dpng-debug</code></p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+</div>
+
+
+
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="read(path:String):Canvas-class-method">
+      <div class="signature">
+        
+        def self.<strong>read</strong>(path : String) : <a href="PNG/Canvas.html">Canvas</a>
+
+        <a class="method-permalink" href="#read%28path%3AString%29%3ACanvas-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reads a png stream returns a <em>PNG::Canvas</em></p>
+<pre><code class="language-crystal">canvas <span class="o">=</span> <span class="t">PNG</span>.read(<span class="s">&quot;examples/gradient.png&quot;</span>)
+canvas.header.color_type <span class="c"># =&gt; PNG::ColorType::RGB</span>
+canvas[<span class="n">0</span>, <span class="n">0</span>]             <span class="c"># =&gt; Bytes[0, 255, 0]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png.cr#L38" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="read(io:IO):Canvas-class-method">
+      <div class="signature">
+        
+        def self.<strong>read</strong>(io : IO) : <a href="PNG/Canvas.html">Canvas</a>
+
+        <a class="method-permalink" href="#read%28io%3AIO%29%3ACanvas-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Reads a png stream returns a <em>PNG::Canvas</em></p>
+<pre><code class="language-crystal">canvas <span class="o">=</span> <span class="t">PNG</span>.read(<span class="s">&quot;examples/gradient.png&quot;</span>)
+canvas.header.color_type <span class="c"># =&gt; PNG::ColorType::RGB</span>
+canvas[<span class="n">0</span>, <span class="n">0</span>]             <span class="c"># =&gt; Bytes[0, 255, 0]</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png.cr#L44" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="write(path:String,canvas:Canvas)-class-method">
+      <div class="signature">
+        
+        def self.<strong>write</strong>(path : String, canvas : <a href="PNG/Canvas.html">Canvas</a>)
+
+        <a class="method-permalink" href="#write%28path%3AString%2Ccanvas%3ACanvas%29-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Write a <em>canvas</em> to a .png file given a <em>path</em></p>
+<pre><code class="language-crystal">canvas <span class="o">=</span> <span class="t">PNG</span><span class="t">::</span><span class="t">Canvas</span>.new(<span class="n">255</span>, <span class="n">255</span>)
+<span class="n">0</span>.upto(canvas.height <span class="o">-</span> <span class="n">1</span>) <span class="k">do</span> <span class="o">|</span>y<span class="o">|</span>
+  <span class="n">0</span>.upto(canvas.width <span class="o">-</span> <span class="n">1</span>) <span class="k">do</span> <span class="o">|</span>x<span class="o">|</span>
+    canvas[x, y] <span class="o">=</span> <span class="t">Bytes</span>[x, <span class="n">255</span>, y]
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="t">PNG</span>.write(<span class="s">&quot;examples/gradient.png&quot;</span>, canvas)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png.cr#L146" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="write(io:IO,canvas:Canvas)-class-method">
+      <div class="signature">
+        
+        def self.<strong>write</strong>(io : IO, canvas : <a href="PNG/Canvas.html">Canvas</a>)
+
+        <a class="method-permalink" href="#write%28io%3AIO%2Ccanvas%3ACanvas%29-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Write a <em>canvas</em> to a given <em>io</em> in png format.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png.cr#L153" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>
+    <a id="macro-detail" class="anchor" href="#macro-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Macro Detail
+  </h2>
+  
+    <div class="entry-detail" id="debug(args)-macro">
+      <div class="signature">
+        
+        macro <strong>debug</strong>(args)
+
+        <a class="method-permalink" href="#debug%28args%29-macro">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Only logs messages if built with <code>-Dpng-debug</code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/SleepingInsomniac/png/blob/2ed795067f9ac330f18445871e6b029461f3da76/src/png.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>
