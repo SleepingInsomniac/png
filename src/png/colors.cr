@@ -67,11 +67,11 @@ module PNG
 
       {% for m, t in {u8: UInt8, u16: UInt16, u32: UInt32} %}
         def to_{{ m }}
-          if T == {{t}}
+          {% if t == @type.type_vars[0] %}
             self
-          else
+          {% else %}
             {{@type.name(generic_args: false)}}({{t}}).new(@channels.map { |c| {{t}}.new((c / T::MAX) * {{t}}::MAX) })
-          end
+          {% end %}
         end
       {% end %}
 

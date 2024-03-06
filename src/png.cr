@@ -7,6 +7,7 @@ require "./png/scanline"
 require "./png/parser"
 require "./png/chunk"
 require "./png/canvas"
+require "./png/heuristic"
 
 module PNG
   # Only logs messages if built with `-Dpng-debug`
@@ -143,14 +144,14 @@ module PNG
   #
   # PNG.write("examples/gradient.png", canvas)
   # ```
-  def self.write(path : String, canvas : Canvas)
+  def self.write(path : String, canvas : Canvas, &heuristic : (Scanline?, Scanline) -> Scanline)
     File.open(path, "w") do |file|
-      PNG.write(file, canvas)
+      PNG.write(file, canvas, &heuristic)
     end
   end
 
   # Write a *canvas* to a given *io* in png format.
-  def self.write(io : IO, canvas : Canvas)
+  def self.write(io : IO, canvas : Canvas, &heuristic : (Scanline?, Scanline) -> Scanline)
     io.write(MAGIC)
     canvas.header.write(io)
 
@@ -195,11 +196,10 @@ module PNG
             bpr = canvas.bytes_per_row
             offset = y * bpr
             scanline = Scanline.new(canvas.header, FilterMethod::None, canvas.data[offset...(offset + bpr)])
+            scanline = yield previous, scanline
 
             deflate.write_byte(scanline.filter.value)
-            scanline.filter(previous) do |byte|
-              deflate.write_byte(byte)
-            end
+            scanline.filter(previous) { |byte| deflate.write_byte(byte) }
             previous = scanline
           end
         else
@@ -221,6 +221,8 @@ module PNG
 
             index += row_pixels
 
+            scanline = yield previous, scanline
+
             deflate.write_byte(scanline.filter.value)
             scanline.filter(previous) do |byte|
               deflate.write_byte(byte)
@@ -236,5 +238,13 @@ module PNG
     end
 
     Chunk.write("IEND", io, Bytes[])
+  end
+
+  def self.write(path : String, canvas : Canvas)
+    write(path, canvas, &Heuristic::NONE)
+  end
+
+  def self.write(io : IO, canvas : Canvas)
+    write(io, canvas, &Heuristic::NONE)
   end
 end

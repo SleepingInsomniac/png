@@ -6,6 +6,10 @@ module PNG
 
     define_channels [r, g, b, a]
 
+    def initialize(r : T, g : T, b : T)
+      initialize(r, g, b, T::MAX)
+    end
+
     def to_rgb8
       alpha = (a / T::MAX)
       RGB(UInt8).new(
