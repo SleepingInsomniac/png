@@ -17,6 +17,16 @@ module PNG
       :color_type,
       to: @header
 
+    def self.make(width : UInt32, height : UInt32, palette : Bytes? = nil)
+      canvas = new(width, height, palette)
+      canvas.fill { |x, y| yield(x, y) }
+    end
+
+    def self.make(header : Header, palette : Bytes? = nil)
+      canvas = new(header: header, palette: palette)
+      canvas.fill { |x, y| yield(x, y) }
+    end
+
     def initialize(width : UInt32, height : UInt32, @palette = nil)
       if @palette.nil?
         @header = Header.new(width, height)
@@ -32,6 +42,18 @@ module PNG
       else
         @data = Bytes.new(@header.byte_size)
       end
+    end
+
+    # Iterate over each x, y coordinate and set the pixel value.
+    def fill(& : UInt32, UInt32 -> Enumerable(UInt8)?)
+      0u32.upto(height - 1) do |y|
+        0u32.upto(width - 1) do |x|
+          if c = yield(x, y)
+            self[x, y] = c
+          end
+        end
+      end
+      self
     end
 
     def interlaced? : Bool
@@ -101,7 +123,7 @@ module PNG
         end
       when 8, 16
         offset = byte_index(x, y)
-        @data[offset...(offset + @header.bytes_per_pixel)]
+        @data[offset...(offset + @header.bytes_per_pixel)].dup
       else
         raise Error.new("Invalid bit depth: #{@header.bit_depth}")
       end
@@ -116,7 +138,23 @@ module PNG
       @header.colorize(self[x, y], @palette)
     end
 
-    def set_color(x, y, color)
+    # Set a color at x, y
+    def set_color(x, y, color : Color)
+      self[x, y] = color
+    end
+
+    # Crop a canvas in absolute coordinates
+    def crop(start_x : Int, start_y : Int, end_x : Int, end_y : Int) # : Canvas
+      new_header = @header.dup
+      new_header.width = (end_x - start_x).to_u32
+      new_header.height = (end_y - start_y).to_u32
+
+      Canvas.make(new_header, palette: @palette.dup) do |x, y|
+        if ((start_x + x) > 0 && (x + start_x < width)) &&
+           ((start_y + y) > 0 && (y + start_y < height))
+          self[x + start_x, y + start_y]
+        end
+      end
     end
   end
 end
