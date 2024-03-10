@@ -14,7 +14,7 @@
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="png">
-  <title>PNG::Interlacing - png master</title>
+  <title>PNG::Heuristic - png master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -127,7 +127,7 @@
       
     </li>
   
-  <li class=" " data-id="png/PNG/Heuristic" data-name="png::heuristic">
+  <li class=" current" data-id="png/PNG/Heuristic" data-name="png::heuristic">
       <a href="../PNG/Heuristic.html">Heuristic</a>
       
     </li>
@@ -152,7 +152,7 @@
       
     </li>
   
-  <li class=" current" data-id="png/PNG/Interlacing" data-name="png::interlacing">
+  <li class=" " data-id="png/PNG/Interlacing" data-name="png::interlacing">
       <a href="../PNG/Interlacing.html">Interlacing</a>
       
     </li>
@@ -196,7 +196,7 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">enum</span> PNG::<wbr>Interlacing
+  <span class="kind">module</span> PNG::<wbr>Heuristic
 
 </h1>
 
@@ -227,8 +227,8 @@
   </h2>
   
     
-      <a href="https://github.com/SleepingInsomniac/png/blob/6f9ce88dddb97a3b250aac78022202cdc9b3302c/src/png/enums/interlacing.cr#L2" target="_blank">
-        png/enums/interlacing.cr
+      <a href="https://github.com/SleepingInsomniac/png/blob/6f9ce88dddb97a3b250aac78022202cdc9b3302c/src/png/heuristic.cr#L2" target="_blank">
+        png/heuristic.cr
       </a>
     
     <br/>
@@ -238,23 +238,52 @@
 
   
     <h2>
-      <a id="enum-members" class="anchor" href="#enum-members">
+      <a id="constant-summary" class="anchor" href="#constant-summary">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-      Enum Members
+      Constant Summary
     </h2>
   
   <dl>
     
-      <dt class="entry-const" id="None">
-        <strong>None</strong> = <code><span class="n">0_u8</span></code>
+      <dt class="entry-const" id="AVERAGE">
+        <strong>AVERAGE</strong> = <code><span class="o">-&gt;</span>(prev : <span class="t">Scanline</span> <span class="o">|</span> <span class="t">::</span><span class="t">Nil</span>, curr : <span class="t">Scanline</span>) <span class="k">do</span>
+  curr.filter <span class="o">=</span> <span class="t">FilterMethod</span><span class="t">::</span><span class="t">Average</span>
+  curr
+<span class="k">end</span></code>
       </dt>
       
     
-      <dt class="entry-const" id="Adam7">
-        <strong>Adam7</strong> = <code><span class="n">1_u8</span></code>
+      <dt class="entry-const" id="NONE">
+        <strong>NONE</strong> = <code><span class="o">-&gt;</span>(prev : <span class="t">Scanline</span> <span class="o">|</span> <span class="t">::</span><span class="t">Nil</span>, curr : <span class="t">Scanline</span>) <span class="k">do</span>
+  curr
+<span class="k">end</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="PAETH">
+        <strong>PAETH</strong> = <code><span class="o">-&gt;</span>(prev : <span class="t">Scanline</span> <span class="o">|</span> <span class="t">::</span><span class="t">Nil</span>, curr : <span class="t">Scanline</span>) <span class="k">do</span>
+  curr.filter <span class="o">=</span> <span class="t">FilterMethod</span><span class="t">::</span><span class="t">Paeth</span>
+  curr
+<span class="k">end</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="SUB">
+        <strong>SUB</strong> = <code><span class="o">-&gt;</span>(prev : <span class="t">Scanline</span> <span class="o">|</span> <span class="t">::</span><span class="t">Nil</span>, curr : <span class="t">Scanline</span>) <span class="k">do</span>
+  curr.filter <span class="o">=</span> <span class="t">FilterMethod</span><span class="t">::</span><span class="t">Sub</span>
+  curr
+<span class="k">end</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="UP">
+        <strong>UP</strong> = <code><span class="o">-&gt;</span>(prev : <span class="t">Scanline</span> <span class="o">|</span> <span class="t">::</span><span class="t">Nil</span>, curr : <span class="t">Scanline</span>) <span class="k">do</span>
+  curr.filter <span class="o">=</span> <span class="t">FilterMethod</span><span class="t">::</span><span class="t">Up</span>
+  curr
+<span class="k">end</span></code>
       </dt>
       
     
@@ -268,83 +297,9 @@
 
 
 
-  <h2>
-    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Instance Method Summary
-  </h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#adam7%3F-instance-method" class="signature"><strong>#adam7?</strong></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#none%3F-instance-method" class="signature"><strong>#none?</strong></a>
-        
-      </li>
-    
-  </ul>
-
 
 
 <div class="methods-inherited">
-  
-    
-
-
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-    
-
-
   
 </div>
 
@@ -354,48 +309,6 @@
 
 
 
-
-  <h2>
-    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Instance Method Detail
-  </h2>
-  
-    <div class="entry-detail" id="adam7?-instance-method">
-      <div class="signature">
-        
-        def <strong>adam7?</strong>
-
-        <a class="method-permalink" href="#adam7%3F-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/SleepingInsomniac/png/blob/6f9ce88dddb97a3b250aac78022202cdc9b3302c/src/png/enums/interlacing.cr#L4" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="none?-instance-method">
-      <div class="signature">
-        
-        def <strong>none?</strong>
-
-        <a class="method-permalink" href="#none%3F-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/SleepingInsomniac/png/blob/6f9ce88dddb97a3b250aac78022202cdc9b3302c/src/png/enums/interlacing.cr#L3" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
 
 
 </div>
