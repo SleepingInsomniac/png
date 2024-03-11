@@ -146,6 +146,9 @@ module PNG
     # Crop a canvas in absolute coordinates
     def crop(start_x : Int, start_y : Int, end_x : Int, end_y : Int) # : Canvas
       new_header = @header.dup
+      start_x, end_x = end_x, start_x if start_x > end_x
+      start_y, end_y = end_y, start_y if start_y > end_y
+
       new_header.width = (end_x - start_x).to_u32
       new_header.height = (end_y - start_y).to_u32
 
