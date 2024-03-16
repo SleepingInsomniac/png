@@ -6,7 +6,7 @@
 
    ```yaml
    dependencies:
-     PNG:
+     png:
        github: sleepinginsomniac/png
    ```
 
