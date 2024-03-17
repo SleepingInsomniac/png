@@ -118,7 +118,7 @@ All PNG color types and bit depths are supported for reading / writing
 | sRGB | -       |
 | bKGD | Yes     |
 | hIST | -       |
-| tRNS | -       |
+| tRNS | Yes     |
 | pHYs | Yes     |
 | sPLT | -       |
 | tIME | Yes     |

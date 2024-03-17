@@ -7,6 +7,7 @@ module PNG
     property header : Header               # IHDR
     property data : Bytes                  # IDAT
     property palette : Bytes? = nil        # PLTE
+    property transparency : Bytes? = nil   # tRNS
     property pixel_size : PixelSize? = nil # pHYs
     property bg_color : Bytes? = nil       # bKGD
     property last_modified : Time? = nil   # tIME

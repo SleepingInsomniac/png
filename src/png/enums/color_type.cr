@@ -17,5 +17,12 @@ module PNG
         raise Error.new("Invalid color type #{self}")
       end
     end
+
+    def alpha?
+      case self
+      when GrayscaleAlpha, TrueColorAlpha then true
+      else                                     false
+      end
+    end
   end
 end
