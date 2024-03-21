@@ -68,10 +68,10 @@ module PNG
         case chunk_type
         when "PLTE"
           canvas.palette = Bytes.new(byte_size)
-          io.read_fully(canvas.palette)
+          io.read_fully(canvas.palette.not_nil!)
         when "tRNS"
           canvas.transparency = Bytes.new(byte_size)
-          io.read_fully(canvas.transparency)
+          io.read_fully(canvas.transparency.not_nil!)
         when "IDAT"
           while byte = io.read_byte
             inflater.inhale(byte)
