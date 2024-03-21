@@ -61,7 +61,7 @@ module PNG
     # Convert bytes into a color struct
     def colorize(colors : Bytes, palette : Bytes? = nil)
       if bit_depth < 8 && !color_type.indexed?
-        # Convert a lower bit value to it's 8bit equivalent
+        # Convert a lower bit value to its 8bit equivalent
         shift = 8u8 - bit_depth
         max = UInt8::MAX >> shift
         colors = colors.map { |c| UInt8.new((c / max) * UInt8::MAX) }

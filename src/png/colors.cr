@@ -1,6 +1,6 @@
 module PNG
   abstract struct Color(T, N)
-    include Enumerable(UInt8)
+    include Enumerable(T)
     property channels : StaticArray(T, N)
 
     macro [](*args)
@@ -14,7 +14,9 @@ module PNG
     def initialize(@channels)
     end
 
-    def channels
+    delegate :[], :[]=, :each, to: @channels
+
+    def num_channels
       N
     end
 
@@ -26,14 +28,20 @@ module PNG
       @channels.to_slice
     end
 
-    def each(& : UInt8 ->)
+    def to_bytes
+      c = @channels.dup
+      ptr = pointerof(c).as(Pointer(UInt8))
+      bytes = Slice.new(ptr, bytesize)
+
       @channels.each do |c|
         c = c.byte_swap
-        sizeof(T).times do
-          yield (c & 255).to_u8
+        sizeof(T).times do |i|
+          bytes[i] = (c & 255).to_u8
           c >>= 8
         end
       end
+
+      bytes
     end
 
     def ==(other)
