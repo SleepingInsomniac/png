@@ -53,7 +53,7 @@ module PNG
         {{ @type.name }}.new({% for name in names %}{{ name }}, {% end %})
       end
 
-      def initialize(@channels)
+      def initialize(@channels : StaticArray(T, N))
       end
 
       def initialize({% for name in names %}{{name}} : T, {% end %})
@@ -85,6 +85,13 @@ module PNG
 
       def to_s(io : IO)
         io << {{@type.name}} << '(' << @channels.join(", ") << ')'
+      end
+
+      # Get the Euclidean distance between self and *other*
+      def dist(other)
+        Math.sqrt(@channels.map_with_index do |c, i|
+          (other.channels[i].to_i32 - c.to_i32) ** 2
+        end.sum)
       end
     end
   end
