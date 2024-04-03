@@ -18,7 +18,8 @@ module PNG
     def set_pixel(x : Int, values : Indexable(UInt8)) : Nil
       case bit_depth
       when .< 8
-        pd = PackedData(UInt8).new(@data, bit_depth)[x...(x + bytes_per_pixel)]
+        i = x * channels
+        pd = PackedData(UInt8).new(@data, bit_depth)[i...(i + channels)]
         values.each_with_index { |v, i| pd[i] = v }
       when 8, 16
         byte = x * bytes_per_pixel
@@ -32,7 +33,8 @@ module PNG
     def pixel(x : Int) : Indexable(UInt8)
       case bit_depth
       when .< 8
-        PackedData(UInt8).new(@data, bit_depth)[x...(x + bytes_per_pixel)]
+        i = x * channels
+        PackedData(UInt8).new(@data, bit_depth)[i...(i + channels)]
       when 8, 16
         byte = x * bytes_per_pixel
         @data[byte...(byte + bytes_per_pixel)]

@@ -90,18 +90,16 @@ module PNG
     def []=(x : UInt32, y : UInt32, c : Int, value : UInt8)
       raise Error.new("Channel out of range") if c > @header.bytes_per_pixel
 
-      case @header.bit_depth
-      when .< 8 # Officially 1, 2, 4
-        shift = 8u8 - @header.bit_depth
-        max = UInt8::MAX >> shift
-        bit_offset = bit_index(x, y)
-        offset, bit = (bit_offset + (bit_depth * c)).divmod(8)
-        @data[offset] |= (value & max) << (8 &- @header.bit_depth - bit)
-      when 8, 16
-        offset = byte_index(x, y)
-        @data[offset + c] = value
+      row = scanline(y)
+      channels = color_type.channels
+      n = x * channels
+
+      case bit_depth
+      when .<= 8 then PackedData(UInt8).new(row, bit_depth)[n + c] = value
+      when 8     then row[n + c] = value
+      when 16    then row[n * 2 + c] = value
       else
-        raise Error.new("Invalid bit depth: #{@header.bit_depth}")
+        raise Error.new("Invalid bit depth: #{bit_depth}")
       end
     end
 
@@ -114,27 +112,25 @@ module PNG
     # A canvas with 16bits in RGB would accept 6 bytes, (2 bytes per channel):
     # `canvas[0, 0] = Bytes[255, 255, 0, 0, 255, 255]`
     #
-    def []=(x : UInt32, y : UInt32, values : Enumerable(UInt8))
+    def []=(x : UInt32, y : UInt32, values : Indexable(UInt8))
       if values.size != @header.bytes_per_pixel
         raise Error.new("Value must correspond to bit depth and channel count " \
                         "(#{@header.bytes_per_pixel} bytes)")
       end
 
-      case @header.bit_depth
-      when .< 8 # Officially 1, 2, 4
-        shift = 8u8 - @header.bit_depth
-        max = UInt8::MAX >> shift
-        bit_offset = bit_index(x, y)
+      row = scanline(y)
+      channels = color_type.channels
+      n = x * channels
 
-        values.each_with_index do |value, n|
-          offset, bit = (bit_offset + (bit_depth * n)).divmod(8)
-          @data[offset] |= (value & max) << (8 &- @header.bit_depth - bit)
-        end
-      when 8, 16
-        offset = byte_index(x, y)
-        values.each_with_index { |v, n| @data[offset + n] = v }
+      case bit_depth
+      when .<= 8
+        PackedData(UInt8).new(row, bit_depth)[n...(n + channels)].map_with_index! { |v, i| values[i] }
+      when 8
+        row[n...(n + channels)].map_with_index! { |v, i| values[i] }
+      when 16
+        row[(n * 2)...(n * 2 + channels * 2)].map_with_index! { |v, i| values[i] }
       else
-        raise Error.new("Invalid bit depth: #{@header.bit_depth}")
+        raise Error.new("Invalid bit depth: #{bit_depth}")
       end
     end
 
@@ -165,12 +161,12 @@ module PNG
     def [](x : UInt32, y : UInt32)
       row = scanline(y)
       channels = color_type.channels
-      i = x * channels
+      n = x * channels
 
       case bit_depth
-      when .<= 8 then PackedData(UInt8).new(row, bit_depth)[i...(i + channels)]
-      when 8     then row[i...(i + channels)]
-      when 16    then row[(i * 2)...(i * 2 + channels * 2)]
+      when .<= 8 then PackedData(UInt8).new(row, bit_depth)[n...(n + channels)]
+      when 8     then row[n...(n + channels)]
+      when 16    then row[(n * 2)...(n * 2 + channels * 2)]
       else            raise Error.new("Invalid bit depth: #{bit_depth}")
       end
     end
