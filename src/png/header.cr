@@ -59,7 +59,7 @@ module PNG
     end
 
     # Convert bytes into a color struct
-    def colorize(colors : Bytes, palette : Bytes? = nil)
+    def colorize(colors : Bytes, palette : Palette? = nil)
       if bit_depth < 8 && !color_type.indexed?
         # Convert a lower bit value to its 8bit equivalent
         shift = 8u8 - bit_depth
@@ -83,9 +83,7 @@ module PNG
         case color_type
         when .indexed?
           if p = palette
-            p_index = colors[0].to_u32 * 3
-            r, g, b = palette[p_index..(p_index + 2)]
-            RGB(UInt8).new(r, g, b)
+            RGB(UInt8).new(*p[colors[0]])
           else
             raise Error.new("Palette required for indexed images")
           end

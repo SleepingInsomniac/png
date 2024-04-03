@@ -1,4 +1,5 @@
 require "./colors"
+require "./palette"
 require "../drawable"
 
 module PNG
@@ -7,9 +8,9 @@ module PNG
   class Canvas
     include Drawable
 
-    property header : Header        # IHDR
-    property data : Bytes           # IDAT
-    property palette : Bytes? = nil # PLTE
+    property header : Header          # IHDR
+    property data : Bytes             # IDAT
+    property palette : Palette? = nil # PLTE
 
     property transparency : Bytes? = nil   # tRNS
     property pixel_size : PixelSize? = nil # pHYs
@@ -22,12 +23,12 @@ module PNG
       :color_type,
       to: @header
 
-    def self.make(width : UInt32, height : UInt32, palette : Bytes? = nil)
+    def self.make(width : UInt32, height : UInt32, palette : Palette? = nil)
       canvas = new(width, height, palette)
       canvas.fill { |x, y| yield(x, y) }
     end
 
-    def self.make(header : Header, palette : Bytes? = nil)
+    def self.make(header : Header, palette : Palette? = nil)
       canvas = new(header: header, palette: palette)
       canvas.fill { |x, y| yield(x, y) }
     end
@@ -60,7 +61,7 @@ module PNG
 
     # Return a deep clone of this canvas
     def clone
-      self.class.new(@header.dup, @data.dup, @palette.dup).tap do |new_canvas|
+      self.class.new(@header.dup, @data.dup, @palette.clone).tap do |new_canvas|
         copy_ancilarry(new_canvas)
       end
     end
@@ -148,6 +149,10 @@ module PNG
       end
     end
 
+    def []=(x, y, value : Int)
+      self[x, y, 0] = value.to_u8
+    end
+
     # Get the pixel at x, y into the canvas.
     # This returns the Bytes that represent the pixel.
     def [](x : UInt32, y : UInt32)
@@ -193,7 +198,7 @@ module PNG
       new_header.width = (end_x - start_x).to_u32
       new_header.height = (end_y - start_y).to_u32
 
-      Canvas.make(new_header, @palette.dup) do |x, y|
+      Canvas.make(new_header, @palette.clone) do |x, y|
         if ((start_x + x) >= 0 && (x + start_x < width)) &&
            ((start_y + y) >= 0 && (y + start_y < height))
           self[x + start_x, y + start_y]
@@ -205,7 +210,7 @@ module PNG
       new_header = @header.dup
       new_header.width = width.to_u32
       new_header.height = height.to_u32
-      new_canvas = self.class.new(new_header, @palette.dup)
+      new_canvas = self.class.new(new_header, @palette.clone)
       copy_ancilarry(new_canvas)
       Drawable.resize_nearest_neighbor(self, new_canvas)
     end
@@ -214,7 +219,7 @@ module PNG
       new_header = @header.dup
       new_header.width = width.to_u32
       new_header.height = height.to_u32
-      new_canvas = self.class.new(new_header, @palette.dup)
+      new_canvas = self.class.new(new_header, @palette.clone)
       copy_ancilarry(new_canvas)
       Drawable.resize_bilinear(self, new_canvas)
     end

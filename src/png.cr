@@ -67,8 +67,8 @@ module PNG
       chunk_type = Chunk.read(io) do |chunk_type, io, byte_size|
         case chunk_type
         when "PLTE"
-          canvas.palette = Bytes.new(byte_size)
-          io.read_fully(canvas.palette.not_nil!)
+          canvas.palette = Palette.new(Bytes.new(byte_size))
+          io.read_fully(canvas.palette.not_nil!.data)
         when "tRNS"
           canvas.transparency = Bytes.new(byte_size)
           io.read_fully(canvas.transparency.not_nil!)
@@ -178,7 +178,7 @@ module PNG
 
     if canvas.header.color_type.indexed?
       if palette = canvas.palette
-        Chunk.write("PLTE", io, palette)
+        Chunk.write("PLTE", io, palette.data)
       else
         raise Error.new("Missing palette for Indexed color type")
       end
