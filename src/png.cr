@@ -8,6 +8,7 @@ require "./png/parser"
 require "./png/chunk"
 require "./png/canvas"
 require "./png/heuristic"
+require "./png/packed_data"
 
 module PNG
   # Only logs messages if built with `-Dpng-debug`

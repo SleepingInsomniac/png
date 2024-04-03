@@ -59,7 +59,7 @@ module PNG
     end
 
     # Convert bytes into a color struct
-    def colorize(colors : Bytes, palette : Palette? = nil)
+    def colorize(colors : Indexable(UInt8), palette : Palette? = nil)
       if bit_depth < 8 && !color_type.indexed?
         # Convert a lower bit value to its 8bit equivalent
         shift = 8u8 - bit_depth
@@ -79,7 +79,6 @@ module PNG
           raise Error.new("Invalid color type: #{color_type} for #{bit_depth} bits")
         end
       else
-        colors = colors.as(Slice(UInt8))
         case color_type
         when .indexed?
           if p = palette

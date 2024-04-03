@@ -17,8 +17,8 @@ end
 def print_canvas(canvas)
   canvas.palette.try do |palette|
     n = 0
-    palette.each_slice(3) do |(r, g, b)|
-      print "██".colorize(r, g, b)
+    palette.each do |color|
+      print "██".colorize(*color)
       puts if (n += 1) % 32 == 0
     end
     puts

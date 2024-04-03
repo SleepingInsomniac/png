@@ -50,6 +50,13 @@ module PNG
       end
     end
 
+    # Return the bytes corresponding to scanline
+    def scanline(y)
+      bpr = header.bytes_per_row
+      index = y * bpr
+      @data[index...(index + bpr)]
+    end
+
     # Copy the ancillarry data to a new canvas
     def copy_ancilarry(to : Canvas)
       to.transparency = @transparency.dup
@@ -153,28 +160,22 @@ module PNG
       self[x, y, 0] = value.to_u8
     end
 
-    # Get the pixel at x, y into the canvas.
+    # Get the data at x, y into the canvas.
     # This returns the Bytes that represent the pixel.
     def [](x : UInt32, y : UInt32)
-      case @header.bit_depth
-      when .< 8
-        bit_offset = bit_index(x, y)
+      row = scanline(y)
+      channels = color_type.channels
+      i = x * channels
 
-        shift = 8u8 - @header.bit_depth
-        max = UInt8::MAX >> shift
-
-        Bytes.new(@header.color_type.channels.to_i32) do |n|
-          offset, bit = (bit_offset + (n * @header.bit_depth)).divmod(8)
-          (@data[offset] >> (shift &- bit)) & max
-        end
-      when 8, 16
-        offset = byte_index(x, y)
-        @data[offset...(offset + @header.bytes_per_pixel)].dup
-      else
-        raise Error.new("Invalid bit depth: #{@header.bit_depth}")
+      case bit_depth
+      when .<= 8 then PackedData(UInt8).new(row, bit_depth)[i...(i + channels)]
+      when 8     then row[i...(i + channels)]
+      when 16    then row[(i * 2)...(i * 2 + channels * 2)]
+      else            raise Error.new("Invalid bit depth: #{bit_depth}")
       end
     end
 
+    # :ditto:
     def [](x : Number, y : Number)
       self[x.to_u32, y.to_u32]
     end
@@ -210,7 +211,7 @@ module PNG
       new_header = @header.dup
       new_header.width = width.to_u32
       new_header.height = height.to_u32
-      new_canvas = self.class.new(new_header, @palette.clone)
+      new_canvas = self.class.new(new_header, palette: @palette.clone)
       copy_ancilarry(new_canvas)
       Drawable.resize_nearest_neighbor(self, new_canvas)
     end
@@ -219,7 +220,7 @@ module PNG
       new_header = @header.dup
       new_header.width = width.to_u32
       new_header.height = height.to_u32
-      new_canvas = self.class.new(new_header, @palette.clone)
+      new_canvas = self.class.new(new_header, palette: @palette.clone)
       copy_ancilarry(new_canvas)
       Drawable.resize_bilinear(self, new_canvas)
     end
