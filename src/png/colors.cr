@@ -1,6 +1,6 @@
 module PNG
   abstract struct Color(T, N)
-    include Enumerable(T)
+    include Indexable::Mutable(T)
     property channels : StaticArray(T, N)
 
     macro [](*args)
@@ -14,7 +14,7 @@ module PNG
     def initialize(@channels)
     end
 
-    delegate :[], :[]=, :each, to: @channels
+    delegate :[], :[]=, :each, :size, :unsafe_fetch, :unsafe_put, to: @channels
 
     def num_channels
       N

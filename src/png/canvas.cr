@@ -134,15 +134,15 @@ module PNG
       end
     end
 
-    def []=(x, y, values : Enumerable(Number))
+    def []=(x, y, values : Indexable(Number))
       self[x, y] = bit_depth <= 8 ? values.map(&.to_u8) : values.map(&.to_u16)
     end
 
-    def []=(x, y, values : Enumerable(UInt8))
+    def []=(x, y, values : Indexable(UInt8))
       self[x.to_u32, y.to_u32] = values
     end
 
-    def []=(x, y, values : Enumerable(UInt16))
+    def []=(x, y, values : Indexable(UInt16))
       values.each_with_index do |v, i|
         low_byte = (v & 255u8).to_u8
         high_byte = ((v >> 8) & 255u8).to_u8
