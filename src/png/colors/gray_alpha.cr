@@ -11,5 +11,11 @@ module PNG
       v = UInt8.new(((g / T::MAX) * alpha) * UInt8::MAX)
       RGB(UInt8).new(v, v, v)
     end
+
+    def to_g8
+      alpha = (a / T::MAX)
+      v = UInt8.new(((g / T::MAX) * alpha) * UInt8::MAX)
+      Gray(UInt8).new(v)
+    end
   end
 end

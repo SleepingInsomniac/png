@@ -18,5 +18,12 @@ module PNG
         UInt8.new(((b / T::MAX) * alpha) * UInt8::MAX)
       )
     end
+
+    # via luminosity method
+    def to_g8
+      rgb8 = to_rgb8
+      g = 0.3 * rgb8.r + 0.59 * rgb8.g + 0.11 * rgb8.b
+      Gray(UInt8).new(UInt8.new(g.floor))
+    end
   end
 end
